@@ -6,7 +6,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -79,5 +81,49 @@ public class DefectDao {
 		defect.setEta(eta);
 		return defect;
 		
+	}
+
+	public Response getAllDefects() {
+		Response response = new Response();
+		List<Defect> defects = new ArrayList<Defect>();
+		String query = "select * from defects";
+		defects = parseDefects(DBUtil.getData(query));
+		if(defects.size() ==0) {
+			response.setStatus("noDataFound");
+			response.setStatusMessage("getAllDefects fail");
+			response.setResponseObject(defects);
+		}else {
+			response.setStatus("Success");
+			response.setStatusMessage("getAllDefects success");
+		}
+		response.setResponseObject(defects);
+		System.out.println("getAllDefects Response : " + response);
+		return response;
+	}
+
+	private List<Defect> parseDefects(ResultSet rs) {
+		List<Defect> defects = new ArrayList<Defect>();
+		try {
+			while(null != rs && rs.next()) {
+				Defect defect = new Defect();
+				defect.setId(rs.getInt(1));
+				defect.setDescription(rs.getString(2));
+				defect.setStatus(rs.getString(3));
+				defect.setIdentifiedBy(rs.getString(4));
+				defect.setAssignedTo(rs.getString(5));
+				defect.setEta(new Date(rs.getString(6)));
+				defect.setDefectDate(new Date(rs.getString(7)));
+				defect.setRca(rs.getString(8));
+				defects.add(defect);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return defects;
+	}
+	
+	public static void main(String[] args) {
+		DefectDao dao  = new DefectDao();
+		System.out.println(dao.getAllDefects());
 	}
 }

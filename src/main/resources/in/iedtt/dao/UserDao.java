@@ -1,5 +1,7 @@
 package in.iedtt.dao;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -15,7 +17,7 @@ import in.iedtt.entity.UserProfile;
 import in.iedtt.util.DBUtil;
 
 public class UserDao {
-	
+
 	public Response findUserByEmailIdAndPassword(User user) {
 		Response response = new Response();
 		String query = "select * from user where email_id ='" + user.getEmailId() +"' and password = '"+user.getPassword()+"'";
@@ -32,7 +34,7 @@ public class UserDao {
 		System.out.println("Login Response : " + response);
 		return response;
 	}
-	
+
 	public Response userRegistration(User user) {
 		Response response = new Response();
 		String query ="insert into user values('"+user.getEmailId()+"','"+user.getPassword()+"','"+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(user.getDatOfRegistration())+"','"+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(user.getLastLogin())+"',true)";
@@ -53,21 +55,21 @@ public class UserDao {
 		System.out.println("User Registration Response : " + response);
 		return response;
 	}
-	
+
 	public Response userProfileRegistration(UserProfile userProfile) {
 		Response response = new Response();
 		String query = "insert into user_profile values ('"+
-													 userProfile.getEmailId()+"','"+
-													 userProfile.getFirstName()+"','"+
-													 userProfile.getLastName()+"','"+
-													 userProfile.getGender()+"','"+
-													 userProfile.getMobile()+"','"+
-													 userProfile.getSecretQuestion1()+"','"+
-													 userProfile.getSecretQuestionAnswer1()+"','"+
-													 userProfile.getSecretQuestion2()+"','"+
-													 userProfile.getSecretQuestionAnswer2()+"',"+
-													 userProfile.getIsUserProfileActive()
-												+")";
+				userProfile.getEmailId()+"','"+
+				userProfile.getFirstName()+"','"+
+				userProfile.getLastName()+"','"+
+				userProfile.getGender()+"','"+
+				userProfile.getMobile()+"','"+
+				userProfile.getSecretQuestion1()+"','"+
+				userProfile.getSecretQuestionAnswer1()+"','"+
+				userProfile.getSecretQuestion2()+"','"+
+				userProfile.getSecretQuestionAnswer2()+"',"+
+				userProfile.getIsUserProfileActive()
+				+")";
 		int saveDBResponse = DBUtil.insert(query);
 		if(saveDBResponse == 0) {
 			response.setStatus("Fail");
@@ -98,13 +100,26 @@ public class UserDao {
 		}
 		return user;
 	}
-	public Response findAllUsers(User user) {
+	public Response findAllUsers() {
 		Response response = new Response();
-		List<String> users = null;
-		String query = "select email_id from user";
-		users = parseUserIds(DBUtil.getData(query));
+		PreparedStatement pstmt = null;
+		Connection connection = null;
+		List<UserProfile> users = null;
+		ResultSet rs = null;
+		String query = "select * from user_profile where is_user_profile_active = ?";
+		connection = DBUtil.getconnection();
+		try {
+			pstmt = connection.prepareStatement(query);
+			pstmt.setBoolean(1,true);
+			System.err.println("Prepared Statement for findAllUsers after bind variables set:\n\t" + pstmt.toString());
+			rs=pstmt.executeQuery();
+			users = parseUserIds(rs);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		;
 		if(users.size() ==0) {
-			response.setStatus("Fail");
+			response.setStatus("noDataFound");
 			response.setStatusMessage("findAllUsers fail");
 			response.setResponseObject(users);
 		}else {
@@ -116,18 +131,29 @@ public class UserDao {
 		return response;
 	}
 
-	private List<String> parseUserIds(ResultSet rs) {
-		List<String> users = new ArrayList<String>();
+	private List<UserProfile> parseUserIds(ResultSet rs) {
+		List<UserProfile> users = new ArrayList<UserProfile>();
 		try {
 			while(null != rs && rs.next()) {
-				users.add(rs.getString(1));
+				UserProfile profile = new UserProfile();
+				profile.setEmailId(rs.getString(1));
+				profile.setFirstName(rs.getString(2));
+				profile.setLastName(rs.getString(3));
+				profile.setGender(rs.getString(4));
+				profile.setMobile(rs.getString(5));
+				profile.setSecretQuestion1(rs.getString(6));
+				profile.setSecretQuestionAnswer1(rs.getString(7));
+				profile.setSecretQuestion2(rs.getString(8));
+				profile.setSecretQuestionAnswer2(rs.getString(9));
+				profile.setIsUserProfileActive(rs.getBoolean(10));
+				users.add(profile);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return users;
 	}
-	
+
 	public UserProfile getRegistrationUser(HttpServletRequest request) {
 		UserProfile userProfile = new UserProfile();
 		String firstName=(String)request.getParameter("firstName");
@@ -150,7 +176,7 @@ public class UserDao {
 		userProfile.setSecretQuestionAnswer2(secretQuestionAnswer2);
 		userProfile.setIsUserProfileActive(true);
 		return userProfile;
-		
+
 	}
 	public User getUserForRegistration(HttpServletRequest request) {
 		User user = new User();
@@ -172,5 +198,10 @@ public class UserDao {
 		String password = (String)request.getParameter("pwd");
 		user.setPassword(password);
 		return user;
+	}
+
+	public static void main(String[] args) {
+		UserDao dao = new UserDao();
+		System.out.println(dao.findAllUsers());
 	}
 }

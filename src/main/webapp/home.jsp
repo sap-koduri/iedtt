@@ -40,7 +40,7 @@ $( document ).ready(function() {
       <p>ODTS</p>
     </div>
     <ul id="topnav">
-     <li><a href="./newDefect.jsp">Defect</a></li>
+     <li><a href="./newDefect">Defect</a></li>
       <li><a href="./registerRoles.jsp">Register User</a></li>
     </ul>
     <br class="clear"/>
@@ -57,11 +57,31 @@ $( document ).ready(function() {
 							<p><h3>HOME PAGE</h3></p>
 							<div>
 								<section>
-									<form method="post" action="">
-										<table>
-											
-										</table>
-									</form>
+									<table>
+										<tr>
+											<td>
+												<label>Description</label>
+											</td>
+											<td>
+												<label>Status</label>
+											</td>
+											<td>
+												<label>Identified_by</label>
+											</td>
+											<td>
+												<label>Assigned_to</label>
+											</td>
+											<td>
+												<label>ETA</label>
+											</td>
+											<td>
+												<label>Date</label>
+											</td>
+											<td>
+												<label>RCA</label>
+											</td>
+										</tr>
+									</table>
 								</section>
 							</div>
 						</div>

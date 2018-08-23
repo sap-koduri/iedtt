@@ -1,8 +1,21 @@
+<%@page import="in.iedtt.entity.UserProfile"%>
+<%@page import="java.util.List"%>
 <%@page import="in.iedtt.entity.Response"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
 <%
 	String userId = String.valueOf(request.getSession().getAttribute("userId"));
+	Response findAllUsers = (Response) request.getSession().getAttribute("findAllUsers");
+	List<UserProfile> users = null;
+	String usrNames = "";
+	if(findAllUsers !=null){
+		users = (List<UserProfile>)findAllUsers.getResponseObject();
+		 if(users!=null && !users.isEmpty()){
+		    	for(int i=0;i<users.size();i++){
+		    		usrNames+="<option \""+users.get(i).getEmailId()+"\">"+users.get(i).getFirstName()+" "+ users.get(i).getLastName()+"</option>";
+		    	}
+		 }
+	}
 %>
 <head>
 <title>Online Defect Tracking System</title>
@@ -12,9 +25,8 @@
 
 <script type="text/javascript">
 $( document ).ready(function() {
-    <%
-    	
-    %>
+	$("#assignedTo").val("");
+    $("#assignedTo").append('<%=usrNames%>');
 });
 </script>
 </head>
@@ -39,7 +51,7 @@ $( document ).ready(function() {
   <div id="intro">
 			<div>
 					<section>
-						<div id="loginDiv">
+						<div id="newDefect">
 						<div>
 							<h2>Defect</h2>
 							<p><h3>Create New Defect</h3></p>
@@ -55,11 +67,11 @@ $( document ).ready(function() {
 												<td>status</td>
 												<td>
 													<select id="status" name="status" required="required" style="width:173px;">
-														<option value="new">New</option>
-														<option value="open">Open</option>
-														<option value="fixed">Fixed</option>
-														<option value="reTest">Re Test</option>
-														<option value="close">Close</option>
+														<option value="0">New</option>
+														<option value="1">Open</option>
+														<option value="2">Fixed</option>
+														<option value="3">Re Test</option>
+														<option value="4">Close</option>
 													</select>
 												</td>
 											</tr>
@@ -100,6 +112,9 @@ $( document ).ready(function() {
 								</section>
 							</div>
 						</div>
+						</div>
+						<div id="defects">
+						
 						</div>
 					</section>
 			</div>
