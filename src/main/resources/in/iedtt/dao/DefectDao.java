@@ -5,10 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -23,17 +26,18 @@ public class DefectDao {
 		PreparedStatement pstmt = null;
 		Connection connection = null;
 		ResultSet rs = null;
+		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Defect creation Method called %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 		try {
-			String query = "insert into defect (description,identifiedBy,assignedTo,defectDate,status,rca,eta) values (?,?,?,?,?,?,?)";
+			String query = "insert into defects (description,identified_by,assigned_to,defect_date,status,rca,eta) values (?,?,?,?,?,?,?)";
 			connection = DBUtil.getconnection();
 			pstmt = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, defect.getDescription());
 			pstmt.setString(2, defect.getIdentifiedBy());
 			pstmt.setString(3, defect.getAssignedTo());
 			pstmt.setString(4, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(defect.getDefectDate()));
-			pstmt.setString(3, defect.getStatus());
-			pstmt.setString(3, defect.getRca());
-			pstmt.setString(3, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(defect.getEta()));
+			pstmt.setString(5, defect.getStatus());
+			pstmt.setString(6, defect.getRca());
+			pstmt.setString(7, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(defect.getEta()));
 			System.err.println("Prepared Statement for Create Defect after bind variables set:\n\t" + pstmt.toString());
 			pstmt.executeUpdate();
 			rs = pstmt.getGeneratedKeys();
@@ -43,6 +47,7 @@ public class DefectDao {
 				response.setStatus("Success");
 				response.setStatusMessage("Defect Created Successfully.\n defect id is : "+ defectId);
 				defect.setId(defectId);
+				response.setResponseObject(defect);
 			}else {
 				response.setStatus("Fail");
 				response.setStatusMessage("Defect Post Fail");
@@ -67,22 +72,32 @@ public class DefectDao {
 		Defect defect = new Defect();
 		String description = (String)request.getParameter("description");
 		defect.setDescription(description);
-		String identifiedBy = (String)request.getParameter("status");
+		String identifiedBy = (String)request.getParameter("identifiedBy");
 		defect.setIdentifiedBy(identifiedBy);
 		String assignedTo = (String)request.getParameter("assignedTo");
 		defect.setAssignedTo(assignedTo);
-		Date defectDate = new Date((String)request.getParameter("defectDate"));
-		defect.setDefectDate(defectDate);
+		String ddate=(String)request.getParameter("defectDate");
+		
+		defect.setDefectDate(getFormatedDate(ddate));
 		String status = (String)request.getParameter("status");
 		defect.setStatus(status);
 		String rca = (String)request.getParameter("rca");
 		defect.setRca(rca);
-		Date eta = new Date((String)request.getParameter("eta"));
-		defect.setEta(eta);
+		String eDate = (String)request.getParameter("eta");
+		defect.setEta(getFormatedDate(eDate));
 		return defect;
 		
 	}
-
+	private Date getFormatedDate(String dateString) {
+		DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
+		Date defectDate = null;
+		try {
+			defectDate = format.parse(dateString);
+		} catch (ParseException e) {
+			System.err.println("Error in getFormatedDate : "+ e.getMessage()+" : dateString");
+		}
+		return defectDate;
+	}
 	public Response getAllDefects() {
 		Response response = new Response();
 		List<Defect> defects = new ArrayList<Defect>();
@@ -111,8 +126,8 @@ public class DefectDao {
 				defect.setStatus(rs.getString(3));
 				defect.setIdentifiedBy(rs.getString(4));
 				defect.setAssignedTo(rs.getString(5));
-				defect.setEta(new Date(rs.getString(6)));
-				defect.setDefectDate(new Date(rs.getString(7)));
+				defect.setEta(rs.getTimestamp(6));
+				defect.setDefectDate(rs.getTimestamp(7));
 				defect.setRca(rs.getString(8));
 				defects.add(defect);
 			}

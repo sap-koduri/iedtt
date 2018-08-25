@@ -28,6 +28,12 @@
   	<description></description>
   	<servlet-class>in.iedtt.controller.newDefect</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>DefectsListServlet</servlet-name>
+  	<display-name>DefectsListServlet</display-name>
+  	<description></description>
+  	<servlet-class>in.iedtt.controller.DefectsListServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>UserRegistrationServlet</servlet-name>
   	<url-pattern>/UserRegistrationServlet</url-pattern>
@@ -43,5 +49,9 @@
   <servlet-mapping>
   	<servlet-name>newDefect</servlet-name>
   	<url-pattern>/newDefect</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>DefectsListServlet</servlet-name>
+  	<url-pattern>/DefectsListServlet</url-pattern>
   </servlet-mapping>
 </web-app>

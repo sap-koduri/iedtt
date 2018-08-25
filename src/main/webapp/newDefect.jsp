@@ -12,7 +12,7 @@
 		users = (List<UserProfile>)findAllUsers.getResponseObject();
 		 if(users!=null && !users.isEmpty()){
 		    	for(int i=0;i<users.size();i++){
-		    		usrNames+="<option \""+users.get(i).getEmailId()+"\">"+users.get(i).getFirstName()+" "+ users.get(i).getLastName()+"</option>";
+		    		usrNames+="<option value=\""+users.get(i).getEmailId()+"\">"+users.get(i).getFirstName()+" "+ users.get(i).getLastName()+"</option>";
 		    	}
 		 }
 	}
@@ -77,7 +77,7 @@ $( document ).ready(function() {
 											</tr>
 											<tr>
 												<td>identifiedBy</td>
-												<td><input type="email" name="identifiedBy" id="identifiedBy" value="<%= userId %>" required="required" disabled="disabled" style="width:173px;"/></td>
+												<td><input type="email" name="identifiedBy" id="identifiedBy" value="<%= userId %>" required="required" style="width:173px;"/></td>
 											</tr>
 											<tr>
 												<td>assignedTo</td>

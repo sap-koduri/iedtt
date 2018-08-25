@@ -21,10 +21,13 @@ $( document ).ready(function() {
     <%
     	if(resp != null){
     %>
-    	alert('<%=statusMessage%>');
+    console.log('<%=statusMessage%>');
     <%
     	}
     %>
+    $( "#defectsListDiv").load("./DefectsListServlet", function() {
+    		console.log("defects list loaded");
+    });
 });
 </script>
 </head>
@@ -51,14 +54,17 @@ $( document ).ready(function() {
   <div id="intro">
 			<div>
 					<section>
-						<div id="loginDiv">
+						<div>
 						<div>
 							<h2>HOME</h2>
 							<p><h3>HOME PAGE</h3></p>
-							<div>
+							<div id="defectsListDiv">
 								<section>
 									<table>
 										<tr>
+											<td>
+												<label>Defect Id</label>
+											</td>
 											<td>
 												<label>Description</label>
 											</td>
