@@ -1,11 +1,12 @@
 
 package in.iedtt.util;
 
-import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -65,6 +66,22 @@ public class DBUtil {
     }
     public static Connection getconnection() {
     	return connection;
+    }
+    public static void closeConnections(PreparedStatement pstmt,ResultSet rs) {
+    	if (rs != null) {
+			try {
+				rs.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		if(pstmt!=null) {
+			try {
+				pstmt.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
     }
     public static void main(String[] args) {
 		

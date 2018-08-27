@@ -88,16 +88,16 @@ $( document ).ready(function() {
 												</td>
 											</tr>
 											<tr>
-												<td>ETA</td>
-												<td><input type="date" name="eta" id="eta" value="" required="required" style="width:173px;"/></td>
-											</tr>
-											<tr>
 												<td>Defect Identified Date</td>
 												<td><input type="date" name="defectDate" id="defectDate" value="" required="required" style="width:173px;"/></td>
 											</tr>
 											<tr>
+												<td>ETA</td>
+												<td><input type="date" name="eta" id="eta" value="" required="required" style="width:173px;"/></td>
+											</tr>
+											<tr>
 												<td>RCA</td>
-												<td><input type="text" name="rca" id="rca" value="" required="required" style="width:173px;"/></td>
+												<td><input type="text" name="rca" id="rca" value="" style="width:173px;"/></td>
 											</tr>
 											<tr>
 											<td>

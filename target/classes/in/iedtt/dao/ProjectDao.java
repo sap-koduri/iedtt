@@ -3,7 +3,8 @@ package in.iedtt.dao;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.Statement;
+
 import javax.servlet.http.HttpServletRequest;
 
 import in.iedtt.entity.Project;
@@ -16,7 +17,7 @@ public class ProjectDao {
 		Project project = null;
 		try {
 			project = new Project();
-			String projectId = (String) request.getAttribute("projectId");
+			int projectId = (Integer) request.getAttribute("projectId");
 			int module = (Integer) request.getAttribute("module");
 			String projectName = (String) request.getAttribute("projectName");
 			project.setModule(module);
@@ -31,18 +32,19 @@ public class ProjectDao {
 	public Response createProject(Project project) {
 		Response response = new Response();
 		PreparedStatement pstmt = null;
-		Connection connection = null;
 		ResultSet rs = null;
+		Connection connection = null;
 		System.out.println(
 				"%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% createProject Method called %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 		try {
 			String query = "insert into project (project_id,name,module) values (?,?,?)";
 			connection = DBUtil.getconnection();
-			pstmt = connection.prepareStatement(query);
+			pstmt = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
 			rs = pstmt.executeQuery();
 			if(rs!=null && rs.next()) {
 				response.setStatus("Success");
-				response.setStatusMessage("Project added Successfully");
+				int projectId= rs.getInt(1);
+				response.setStatusMessage("Project added Successfully\n project id : "+projectId);
 				response.setResponseObject(project);
 			}else {
 				response.setStatus("Fail");
@@ -55,20 +57,7 @@ public class ProjectDao {
 			response.setResponseObject(project);
 			e.printStackTrace();
 		} finally {
-			if (rs != null) {
-				try {
-					rs.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
-			if(pstmt!=null) {
-				try {
-					pstmt.close();
-				} catch (SQLException e) {
-					e.printStackTrace();
-				}
-			}
+			DBUtil.closeConnections(pstmt,rs);
 		}
 		return response;
 	}

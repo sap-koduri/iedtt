@@ -21,7 +21,8 @@ $( document ).ready(function() {
     <%
     	if(resp != null){
     %>
-    console.log('<%=statusMessage%>');
+    	console.log('<%=statusMessage%>');
+    	alert('<%=statusMessage%>');
     <%
     	}
     %>
@@ -44,7 +45,7 @@ $( document ).ready(function() {
     </div>
     <ul id="topnav">
      <li><a href="./newDefect">Defect</a></li>
-      <li><a href="./registerRoles.jsp">Register User</a></li>
+      <li><a href="./adminPanel.jsp">Admin Page</a></li>
     </ul>
     <br class="clear"/>
   </div>
@@ -53,8 +54,8 @@ $( document ).ready(function() {
 <div class="wrapper col3">
   <div id="intro">
 			<div>
-					<section>
-						<div>
+				<section>
+					<div>
 						<div>
 							<h2>HOME</h2>
 							<p><h3>HOME PAGE</h3></p>
@@ -91,8 +92,8 @@ $( document ).ready(function() {
 								</section>
 							</div>
 						</div>
-						</div>
-					</section>
+					</div>
+				</section>
 			</div>
     
     

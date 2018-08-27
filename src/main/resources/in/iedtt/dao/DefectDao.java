@@ -67,7 +67,6 @@ public class DefectDao {
 		return response;
 	}
 	
-	@SuppressWarnings("deprecation")
 	public Defect getNewDefect(HttpServletRequest request) {
 		Defect defect = new Defect();
 		String description = (String)request.getParameter("description");

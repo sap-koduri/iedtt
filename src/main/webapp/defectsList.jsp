@@ -43,31 +43,35 @@
 <body>
 	
 	<div class="limiter">
-				<div class="table100 ver2 m-b-110">
+				<div class="table100 ver2 m-b-110" style="overflow:scroll; height:500px;">
 					<table data-vertable="ver2">
 						<thead>
 							<tr class="row100 head">
 								<th class="column100 column2" data-column="column1">Defect Id</th>
 								<th class="column100 column1" data-column="column2">Description</th>
-								<th class="column100 column3" data-column="column3">Status</th>
-								<th class="column100 column4" data-column="column4">Identified By</th>
-								<th class="column100 column5" data-column="column5">Assigned To</th>
-								<th class="column100 column6" data-column="column6">ETA</th>
-								<th class="column100 column7" data-column="column7">Date</th>
-								<th class="column100 column8" data-column="column8">RCA</th>
+								<th class="column100 column1" data-column="column3">Project</th>
+								<th class="column100 column1" data-column="column4">Module</th>
+								<th class="column100 column3" data-column="column5">Status</th>
+								<th class="column100 column4" data-column="column6">Identified By</th>
+								<th class="column100 column5" data-column="column7">Assigned To</th>
+								<th class="column100 column6" data-column="column8">ETA</th>
+								<th class="column100 column7" data-column="column9">Date</th>
+								<th class="column100 column8" data-column="column10">RCA</th>
 							</tr>
 						</thead>
 						<tbody>
 						<% for(Defect defect:defects){ %>
 							<tr class="row100">
-								<td class="column100 column2" data-column="column1"><%= defect.getId()%></td>
+								<td class="column100 column2" data-column="column1"><a href="#"><%= defect.getId()%></a></td>
 								<td class="column100 column1" data-column="column2"><%= defect.getDescription()%></td>
-								<td class="column100 column3" data-column="column3"><%= defect.getStatus()%></td>
-								<td class="column100 column4" data-column="column4"><%= defect.getIdentifiedBy()%></td>
-								<td class="column100 column5" data-column="column5"><%= defect.getAssignedTo()%></td>
-								<td class="column100 column6" data-column="column6"><%= defect.getEta()%></td>
-								<td class="column100 column7" data-column="column7"><%= defect.getDefectDate()%></td>
-								<td class="column100 column8" data-column="column8"><%= defect.getRca()%></td>
+								<td class="column100 column1" data-column="column3"><%= defect.getDescription()%></td>
+								<td class="column100 column1" data-column="column4"><%= defect.getDescription()%></td>
+								<td class="column100 column3" data-column="column5"><%= defect.getStatus()%></td>
+								<td class="column100 column4" data-column="column6"><%= defect.getIdentifiedBy()%></td>
+								<td class="column100 column5" data-column="column7"><%= defect.getAssignedTo()%></td>
+								<td class="column100 column6" data-column="column8"><%= defect.getEta()%></td>
+								<td class="column100 column7" data-column="column9"><%= defect.getDefectDate()%></td>
+								<td class="column100 column8" data-column="column10"><%= defect.getRca()%></td>
 							</tr>
 						<%} %>
 						</tbody>

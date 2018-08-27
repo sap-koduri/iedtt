@@ -9,7 +9,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import in.iedtt.dao.DefectDao;
-import in.iedtt.dao.UserDao;
 import in.iedtt.entity.Defect;
 import in.iedtt.entity.Response;
 
@@ -22,19 +21,14 @@ public class CreateDefectServlet extends HttpServlet {
 		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Defect creation Requested %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 		Defect defect = new Defect();
 		DefectDao defectDao = new DefectDao();
-		UserDao userDao = new UserDao();
 		defect = defectDao.getNewDefect(request);
 		Response logDefectResponse = defectDao.logDefect(defect);
-		
 		request.setAttribute("response", logDefectResponse);
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("./home.jsp");
-		
 	    requestDispatcher.forward(request, response);
-		
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}
-
 }
