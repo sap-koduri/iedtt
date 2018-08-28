@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -15,9 +16,13 @@ import in.iedtt.entity.Response;
 import in.iedtt.entity.User;
 import in.iedtt.entity.UserProfile;
 import in.iedtt.util.DBUtil;
+import in.iedtt.util.UserRoles;
 
 public class UserDao {
 
+	PreparedStatement pstmt = null;
+	Connection connection = null;
+	ResultSet rs = null;
 	public Response findUserByEmailIdAndPassword(User user) {
 		Response response = new Response();
 		String query = "select * from user where email_id ='" + user.getEmailId() +"' and password = '"+user.getPassword()+"'";
@@ -37,21 +42,36 @@ public class UserDao {
 
 	public Response userRegistration(User user) {
 		Response response = new Response();
-		String query ="insert into user values('"+user.getEmailId()+"','"+user.getPassword()+"','"+ new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(user.getDatOfRegistration())+"','"+new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(user.getLastLogin())+"',true)";
-		int saveDBResponse = DBUtil.insert(query);
-		if(saveDBResponse == 0) {
-			response.setStatus("Fail");
-			response.setStatusMessage("Please verify details");
-			response.setResponseObject(user);
-		}else 	if(saveDBResponse == -1) {
+		String query ="insert into user values (?,?,?,?,?,?,?)";
+		
+		try {
+			connection = DBUtil.getconnection();
+			pstmt = connection.prepareStatement(query);
+			pstmt.setString(1,user.getEmailId());
+			pstmt.setString(2, user.getPassword());
+			pstmt.setString(3, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(user.getDatOfRegistration()));
+			pstmt.setString(4, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(user.getDatOfRegistration()));
+			pstmt.setBoolean(5,true);
+			pstmt.setString(6,UserRoles.NEW_USER);
+			pstmt.setInt(7,0);
+			System.err.println("Prepared Statement for Create User after bind variables set:\n\t" + pstmt.toString());
+			int userCreationResult = pstmt.executeUpdate();
+			if(userCreationResult != 0) {
+				response.setStatus("Success");
+				response.setStatusMessage("Registration success");
+				response.setResponseObject(user);
+			}else {
+				response.setStatus("Fail");
+				response.setStatusMessage("Please verify details");
+				response.setResponseObject(user);
+			}
+		} catch (SQLException e) {
 			response.setStatus("Error");
 			response.setStatusMessage("Internal server error");
 			response.setResponseObject(user);
-		}else {
-			response.setStatus("Success");
-			response.setStatusMessage("Registration success");
-			response.setResponseObject(user);
+			e.printStackTrace();
 		}
+		
 		System.out.println("User Registration Response : " + response);
 		return response;
 	}

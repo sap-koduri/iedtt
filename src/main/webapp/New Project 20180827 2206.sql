@@ -49,6 +49,29 @@ CREATE TABLE `address` (
 
 
 --
+-- Definition of table `defect_comments`
+--
+
+DROP TABLE IF EXISTS `defect_comments`;
+CREATE TABLE `defect_comments` (
+  `defect_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `commentor` varchar(100) NOT NULL,
+  `comment` text NOT NULL,
+  KEY `FK_defect_id` (`defect_id`),
+  KEY `FK_defect_user` (`commentor`),
+  CONSTRAINT `FK_defect_id` FOREIGN KEY (`defect_id`) REFERENCES `defects` (`id`),
+  CONSTRAINT `FK_defect_user` FOREIGN KEY (`commentor`) REFERENCES `user` (`email_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `defect_comments`
+--
+
+/*!40000 ALTER TABLE `defect_comments` DISABLE KEYS */;
+/*!40000 ALTER TABLE `defect_comments` ENABLE KEYS */;
+
+
+--
 -- Definition of table `defects`
 --
 
@@ -63,7 +86,7 @@ CREATE TABLE `defects` (
   `defect_date` datetime NOT NULL,
   `rca` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `defects`
@@ -73,7 +96,11 @@ CREATE TABLE `defects` (
 INSERT INTO `defects` (`id`,`description`,`status`,`identified_by`,`assigned_to`,`eta`,`defect_date`,`rca`) VALUES 
  (1,'new','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-25 00:08:00','2018-01-25 00:08:00','ads'),
  (2,'new','1','sap.koduri@gmail.com','emai@gmail.com','2018-01-25 00:05:00','2018-01-25 00:08:00','ads'),
- (3,'new','1','sap.koduri@gmail.com','emai@gmail.com','2018-01-25 00:05:00','2018-01-25 00:08:00','ads');
+ (3,'new','1','sap.koduri@gmail.com','emai@gmail.com','2018-01-25 00:05:00','2018-01-25 00:08:00','ads'),
+ (4,'new defect','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-27 00:08:00','2018-01-01 00:08:00','asdas'),
+ (5,'new defect','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-27 00:08:00','2018-01-01 00:08:00','asdas'),
+ (6,'adsf','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-27 00:08:00','2018-01-08 00:08:00','sdafsdf'),
+ (7,'adsf','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-27 00:08:00','2018-01-08 00:08:00','sdafsdf');
 /*!40000 ALTER TABLE `defects` ENABLE KEYS */;
 
 
@@ -83,10 +110,10 @@ INSERT INTO `defects` (`id`,`description`,`status`,`identified_by`,`assigned_to`
 
 DROP TABLE IF EXISTS `project`;
 CREATE TABLE `project` (
-  `project_id` varchar(50) NOT NULL,
+  `project_id` int(10) unsigned NOT NULL,
   `name` text NOT NULL,
   `module` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`project_id`,`module`)
+  PRIMARY KEY (`module`,`project_id`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -108,6 +135,7 @@ CREATE TABLE `user` (
   `date_of_registration` datetime NOT NULL,
   `last_login` datetime NOT NULL,
   `is_user_active` tinyint(1) NOT NULL,
+  `role` varchar(45) NOT NULL,
   PRIMARY KEY (`email_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -116,9 +144,9 @@ CREATE TABLE `user` (
 --
 
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` (`email_id`,`password`,`date_of_registration`,`last_login`,`is_user_active`) VALUES 
- ('emai@gmail.com','password','2018-08-19 15:29:33','2018-08-19 15:29:33',1),
- ('sap.koduri@gmail.com','password','2018-08-19 19:27:03','2018-08-19 19:27:03',1);
+INSERT INTO `user` (`email_id`,`password`,`date_of_registration`,`last_login`,`is_user_active`,`role`) VALUES 
+ ('emai@gmail.com','password','2018-08-19 15:29:33','2018-08-19 15:29:33',1,''),
+ ('sap.koduri@gmail.com','password','2018-08-19 19:27:03','2018-08-19 19:27:03',1,'');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 

@@ -45,7 +45,7 @@ public class DefectDao {
 				Integer defectId= rs.getInt(1);
 				System.out.println("Generated Defect Id: " + defectId);
 				response.setStatus("Success");
-				response.setStatusMessage("Defect Created Successfully.\n defect id is : "+ defectId);
+				response.setStatusMessage("Defect Created Successfully. defect id is : "+ defectId);
 				defect.setId(defectId);
 				response.setResponseObject(defect);
 			}else {

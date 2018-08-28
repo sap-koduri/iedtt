@@ -76,9 +76,9 @@ public class Defect {
 	}
 	@Override
 	public String toString() {
-		return "Defect [id=" + id + ", description=" + description + ", status=" + status + ", identifiedBy="
+		return "\nDefect [id=" + id + ", description=" + description + ", status=" + status + ", identifiedBy="
 				+ identifiedBy + ", assignedTo=" + assignedTo + ", eta=" + eta + ", defectDate=" + defectDate + ", rca="
-				+ rca + "]";
+				+ rca + "]\n";
 	}
 	
 	

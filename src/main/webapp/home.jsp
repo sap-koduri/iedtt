@@ -17,7 +17,7 @@
 	
 %>
 <script type="text/javascript">
-$( document ).ready(function() {
+$(document).ready(function() {
     <%
     	if(resp != null){
     %>
@@ -58,37 +58,10 @@ $( document ).ready(function() {
 					<div>
 						<div>
 							<h2>HOME</h2>
-							<p><h3>HOME PAGE</h3></p>
+							<p><h3>Defects</h3></p>
 							<div id="defectsListDiv">
 								<section>
-									<table>
-										<tr>
-											<td>
-												<label>Defect Id</label>
-											</td>
-											<td>
-												<label>Description</label>
-											</td>
-											<td>
-												<label>Status</label>
-											</td>
-											<td>
-												<label>Identified_by</label>
-											</td>
-											<td>
-												<label>Assigned_to</label>
-											</td>
-											<td>
-												<label>ETA</label>
-											</td>
-											<td>
-												<label>Date</label>
-											</td>
-											<td>
-												<label>RCA</label>
-											</td>
-										</tr>
-									</table>
+									
 								</section>
 							</div>
 						</div>
