@@ -1,4 +1,14 @@
 <%@page import="in.iedtt.entity.Response"%>
+<%
+	Response resp = (Response)request.getAttribute("response");
+	String status = null;
+	String statusMessage = null;
+	if(resp != null){
+		status = resp.getStatus();
+		statusMessage = resp.getStatusMessage();
+	}
+	
+%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Online Defect Tracking System</title>
@@ -53,6 +63,16 @@
 	function closeNav() {
 	    document.getElementById("mySidenav").style.width = "0";
 	}
+	$(document).ready(function() {
+	    <%
+	    	if(resp != null){
+	    %>
+	    	console.log('<%=statusMessage%>');
+	    	alert('<%=statusMessage%>');
+	    <%
+	    	}
+	    %>
+	});
 </script>
 
 </head>
@@ -81,10 +101,10 @@
 		<span style="font-size:30px;cursor:pointer" onclick="openNav()">&#9776; Menu</span>		
 		<div id="mySidenav" class="sidenav">
 		  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-		  <a href="#">Add Role</a>
-		  <a href="#">Add Project</a>
-		  <a href="#">Reports</a>
-		  <a href="#">Disable User</a>
+		  <a href="./userRoleUpdate.jsp">Add Role</a>
+		  <a href="./addProject.jsp">Add Project</a>
+		  <a href="./report.jsp">Reports</a>
+		  <a href="./disableUser.jsp">Disable User</a>
 		</div>	
 		<div id="pageLandingDiv">
 		

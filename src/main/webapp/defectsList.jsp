@@ -15,6 +15,11 @@
 	}
 %>
 <html lang="en">
+<script type="text/javascript">
+function loadDefectForEdit(defectId) {
+	alert(defectId);
+}
+</script>
 <head>
 	<title>Defects</title>
 	<meta charset="UTF-8">
@@ -62,7 +67,7 @@
 						<tbody>
 						<% for(Defect defect:defects){ %>
 							<tr class="row100">
-								<td class="column100 column2" data-column="column1"><a href="#"><%= defect.getId()%></a></td>
+								<td class="column100 column2" data-column="column1"><a href="javascript:loadDefectForEdit(<%= defect.getId()%>);"><%= defect.getId()%></a></td>
 								<td class="column100 column1" data-column="column2"><%= defect.getDescription()%></td>
 								<td class="column100 column1" data-column="column3"><%= defect.getDescription()%></td>
 								<td class="column100 column1" data-column="column4"><%= defect.getDescription()%></td>

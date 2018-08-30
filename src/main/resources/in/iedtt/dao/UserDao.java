@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -223,5 +222,37 @@ public class UserDao {
 	public static void main(String[] args) {
 		UserDao dao = new UserDao();
 		System.out.println(dao.findAllUsers());
+	}
+
+	public Response updateUserRole(User user) {
+		Response response = new Response();
+		String query ="update user set role = ? where email_id = ?";
+		
+		try {
+			connection = DBUtil.getconnection();
+			pstmt = connection.prepareStatement(query);
+			pstmt.setString(1,user.getRole());
+			pstmt.setString(2, user.getEmailId());
+
+			System.err.println("Prepared Statement for Update User Role after bind variables set:\n\t" + pstmt.toString());
+			int userCreationResult = pstmt.executeUpdate();
+			if(userCreationResult != 0) {
+				response.setStatus("Success");
+				response.setStatusMessage("Role Update success");
+				response.setResponseObject(user);
+			}else {
+				response.setStatus("Fail");
+				response.setStatusMessage("Role Update Fail");
+				response.setResponseObject(user);
+			}
+		} catch (SQLException e) {
+			response.setStatus("Error");
+			response.setStatusMessage("Internal server error");
+			response.setResponseObject(user);
+			e.printStackTrace();
+		}
+		
+		System.out.println("User Registration Response : " + response);
+		return response;
 	}
 }

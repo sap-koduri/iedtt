@@ -10,17 +10,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import in.iedtt.dao.UserDao;
 import in.iedtt.entity.Response;
+import in.iedtt.entity.User;
 
 /**
- * Servlet implementation class newDefect
+ * Servlet implementation class UpdateUserRoleServlet
  */
-public class newDefect extends HttpServlet {
+public class UpdateUserRoleServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public newDefect() {
+    public UpdateUserRoleServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -29,8 +30,20 @@ public class newDefect extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		RequestDispatcher requestDispatcher = request.getRequestDispatcher("./newDefect.jsp");
-        requestDispatcher.forward(request, response);
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+		User user = new User();
+		String emailId = (String)request.getParameter("users");
+		user.setEmailId(emailId);
+		
+		String role = (String)request.getParameter("role");
+		user.setRole(role );
+		
+		UserDao dao= new UserDao();
+		Response resp = dao.updateUserRole(user);
+		
+		request.setAttribute("response", resp);
+		request.getRequestDispatcher("./adminPanel.jsp").forward(request, response);
 	}
 
 	/**

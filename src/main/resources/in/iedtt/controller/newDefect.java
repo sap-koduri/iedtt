@@ -29,9 +29,6 @@ public class newDefect extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		UserDao userDao = new UserDao();
-		Response findAllUsers = userDao.findAllUsers();
-		request.getSession().setAttribute("findAllUsers", findAllUsers);
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("./newDefect.jsp");
         requestDispatcher.forward(request, response);
 	}

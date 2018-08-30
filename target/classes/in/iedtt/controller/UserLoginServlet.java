@@ -26,13 +26,15 @@ public class UserLoginServlet extends HttpServlet {
 		Response loginResponse = userDao.findUserByEmailIdAndPassword(user);
 		System.out.println(loginResponse);
 		request.setAttribute("response", loginResponse);
-		
+		//Login fail case
 		if(!loginResponse.getStatus().equalsIgnoreCase("Success")) {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("./index.jsp");
 	        requestDispatcher.forward(request, response);
 		}else {
 			String userId = ((User)loginResponse.getResponseObject()).getEmailId();
 			request.getSession().setAttribute("userId", userId);
+			Response findAllUsers = userDao.findAllUsers();
+			request.getSession().setAttribute("findAllUsers", findAllUsers);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("./home.jsp");
 	        requestDispatcher.forward(request, response);
 		}

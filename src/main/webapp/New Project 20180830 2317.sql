@@ -86,7 +86,7 @@ CREATE TABLE `defects` (
   `defect_date` datetime NOT NULL,
   `rca` text NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `defects`
@@ -100,7 +100,11 @@ INSERT INTO `defects` (`id`,`description`,`status`,`identified_by`,`assigned_to`
  (4,'new defect','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-27 00:08:00','2018-01-01 00:08:00','asdas'),
  (5,'new defect','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-27 00:08:00','2018-01-01 00:08:00','asdas'),
  (6,'adsf','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-27 00:08:00','2018-01-08 00:08:00','sdafsdf'),
- (7,'adsf','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-27 00:08:00','2018-01-08 00:08:00','sdafsdf');
+ (7,'adsf','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-27 00:08:00','2018-01-08 00:08:00','sdafsdf'),
+ (8,'new defect','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-23 00:08:00','2018-01-08 00:08:00',''),
+ (9,'new defect','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-16 00:08:00','2018-01-01 00:08:00',''),
+ (10,'new defect','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-29 00:08:00','2018-01-01 00:08:00',''),
+ (11,'dwqe','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-30 00:08:00','2018-01-22 00:08:00','');
 /*!40000 ALTER TABLE `defects` ENABLE KEYS */;
 
 
@@ -136,6 +140,7 @@ CREATE TABLE `user` (
   `last_login` datetime NOT NULL,
   `is_user_active` tinyint(1) NOT NULL,
   `role` varchar(45) NOT NULL,
+  `team` int(10) unsigned NOT NULL,
   PRIMARY KEY (`email_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -144,9 +149,10 @@ CREATE TABLE `user` (
 --
 
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` (`email_id`,`password`,`date_of_registration`,`last_login`,`is_user_active`,`role`) VALUES 
- ('emai@gmail.com','password','2018-08-19 15:29:33','2018-08-19 15:29:33',1,''),
- ('sap.koduri@gmail.com','password','2018-08-19 19:27:03','2018-08-19 19:27:03',1,'');
+INSERT INTO `user` (`email_id`,`password`,`date_of_registration`,`last_login`,`is_user_active`,`role`,`team`) VALUES 
+ ('emai@gmail.com','password','2018-08-19 15:29:33','2018-08-19 15:29:33',1,'',0),
+ ('sap.koduri@gmail.com','password','2018-08-19 19:27:03','2018-08-19 19:27:03',1,'dev',0),
+ ('sap.koduri@yahoo.com','password','2018-08-28 22:36:17','2018-08-28 22:36:17',1,'new',0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 
 
@@ -177,7 +183,8 @@ CREATE TABLE `user_profile` (
 /*!40000 ALTER TABLE `user_profile` DISABLE KEYS */;
 INSERT INTO `user_profile` (`email_id`,`first_name`,`last_name`,`gender`,`mobile`,`security_question_1`,`security_answer_1`,`security_question_2`,`sucrity_answer_2`,`is_user_profile_active`) VALUES 
  ('emai@gmail.com','first name','last name','Female','1234567890','Where Your Born','india','Favourite colour','blue',1),
- ('sap.koduri@gmail.com','fn','ln','Female','9876543210','First School Name','shankar','Favourite colour','blue',1);
+ ('sap.koduri@gmail.com','fn','ln','Female','9876543210','First School Name','shankar','Favourite colour','blue',1),
+ ('sap.koduri@yahoo.com','ss','ss','Male','1324567890','First Mobile Number','1234567890','Best Friend Name','ss',1);
 /*!40000 ALTER TABLE `user_profile` ENABLE KEYS */;
 
 
