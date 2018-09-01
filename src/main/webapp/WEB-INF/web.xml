@@ -40,6 +40,18 @@
   	<description></description>
   	<servlet-class>in.iedtt.controller.UpdateUserRoleServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>ProjectRegistrationServlet</servlet-name>
+  	<display-name>ProjectRegistrationServlet</display-name>
+  	<description></description>
+  	<servlet-class>in.iedtt.controller.ProjectRegistrationServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>DisableUserServlet</servlet-name>
+  	<display-name>DisableUserServlet</display-name>
+  	<description></description>
+  	<servlet-class>in.iedtt.controller.DisableUserServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>UserRegistrationServlet</servlet-name>
   	<url-pattern>/UserRegistrationServlet</url-pattern>
@@ -63,5 +75,13 @@
   <servlet-mapping>
   	<servlet-name>UpdateUserRoleServlet</servlet-name>
   	<url-pattern>/UpdateUserRoleServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ProjectRegistrationServlet</servlet-name>
+  	<url-pattern>/ProjectRegistrationServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>DisableUserServlet</servlet-name>
+  	<url-pattern>/DisableUserServlet</url-pattern>
   </servlet-mapping>
 </web-app>

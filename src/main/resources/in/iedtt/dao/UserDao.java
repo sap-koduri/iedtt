@@ -31,8 +31,13 @@ public class UserDao {
 			response.setStatusMessage("Please verify credentials");
 			response.setResponseObject(user);
 		}else {
-			response.setStatus("Success");
-			response.setStatusMessage("Login success");
+			if(user.isUserActive() == false) {
+				response.setStatus("inActive");
+				response.setStatusMessage("User Login Success. But User is in active.");
+			}else {
+				response.setStatus("Success");
+				response.setStatusMessage("Login success");
+			}
 			response.setResponseObject(user);
 		}
 		System.out.println("Login Response : " + response);
@@ -249,6 +254,46 @@ public class UserDao {
 			response.setStatus("Error");
 			response.setStatusMessage("Internal server error");
 			response.setResponseObject(user);
+			e.printStackTrace();
+		}
+		
+		System.out.println("User Registration Response : " + response);
+		return response;
+	}
+
+	public Response disableUser(String userId) {
+		Response response = new Response();
+		String query ="update user set is_user_active = ? where email_id = ?";
+		
+		try {
+			connection = DBUtil.getconnection();
+			pstmt = connection.prepareStatement(query);
+			pstmt.setBoolean(1, false);
+			pstmt.setString(2,userId);
+
+			System.err.println("Prepared Statement for Update User active after bind variables set:\n\t" + pstmt.toString());
+			int userCreationResult = pstmt.executeUpdate();
+			if(userCreationResult != 0) {
+				
+				query ="update user_profile set is_user_profile_active = ? where email_id = ?";
+				pstmt = connection.prepareStatement(query);
+				pstmt.setBoolean(1, false);
+				pstmt.setString(2,userId);
+
+				System.err.println("Prepared Statement for Update User active after bind variables set:\n\t" + pstmt.toString());
+				
+				response.setStatus("Success");
+				response.setStatusMessage("Role Update success");
+				response.setResponseObject(userId);
+			}else {
+				response.setStatus("Fail");
+				response.setStatusMessage("Role Update Fail");
+				response.setResponseObject(userId);
+			}
+		} catch (SQLException e) {
+			response.setStatus("Error");
+			response.setStatusMessage("Internal server error");
+			response.setResponseObject(userId);
 			e.printStackTrace();
 		}
 		

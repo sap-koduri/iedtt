@@ -38,103 +38,35 @@
 								<table>
 									<tr>
 										<td>
-											<label for="First Name">First Name</label>
+											<label for="First Name">Project Name</label>
 										</td>
 										<td>
-											<input type="text" name="firstName" id="firstName" required="required"/>
+											<input type="text" name="projectName" id="projectName" required="required"/>
 										</td>
 									  </tr>
-									<tr>
+										<tr>
 										<td>
-											<label for="Last Name">Last Name</label>
+											<label for="Last Name">Description</label>
 												</td>
 												<td>
-													<input type="text" name="lastName" id="lastName" required="required"/>
+													<input type="text" name="description" id="description" required="required"/>
 												</td>
 											</tr>
-											<tr>
-												<td>
-													<label for="gender">Gender</label>
+
+										<tr>
+										<td>
+											<label for="Last Name">Module</label>
 												</td>
 												<td>
-													<select name="gender" id="gender" style="width:173px;">
-														<option name="male" id="male">Male</option>
-														<option name="female" id="female">Female</option>
-													</select>
+													<input type="text" name="module" id="module" required="required"/>
 												</td>
 											</tr>
-											<tr>
-												<td>
-													<label for="mobile">Mobile</label>
-												</td>
-												<td>
-													<input type="number" name="mobile" id="mobile" required="required"/>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<label for="email">Email</label>
-												</td>
-												<td>
-													<input type="email" name="emailId" id="emailId" required="required"/>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<label for="password">Password</label>
-												</td>
-												<td>
-													<input type="password" name="password" id="password" required="required"/>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<label for="Security Question 1">Security Question 1</label>
-												</td>
-												<td>
-													<select name="securityQuestion1" id="securityQuestion1" style="width:173px;">
-														<option name="fmn" id="fmn">First Mobile Number</option>
-														<option name="fsn" id="fsn">First School Name</option>
-														<option name="wyb" id="wyb">Where Your Born</option>
-													</select>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<label for="Security Question Answer 1">Security Question Answer 1</label>
-												</td>
-												<td>
-													<input type="Text" name="securityQuestionAnswer1" id="securityQuestionAnswer1" required="required"/>
-												</td>
-											</tr>
-											<tr>
-											<tr>
-												<td>
-													<label for="Security Question 2">Security Question 2</label>
-												</td>
-												<td>
-													<select name="securityQuestion2" id="securityQuestion2" style="width:173px;">
-														<option name="bfn" id="bfn">Best Friend Name</option>
-														<option name="mmn" id="mmn">Mother Middle Name</option>
-														<option name="fc" id="fc">Favourite colour</option>
-													</select>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<label for="Security Question Answer 2">Security Question Answer 2</label>
-												</td>
-												<td>
-													<input type="Text" name="securityQuestionAnswer2" id="securityQuestionAnswer2" required="required"/>
-												</td>
-											</tr>
-											<tr>
 											<tr>
 												<td>
 													
 												</td>
 												<td>
-													<input type="submit" value="Register"/>
+													<input type="submit" value="Add Project"/>
 												</td>
 											</tr>
 										</table>

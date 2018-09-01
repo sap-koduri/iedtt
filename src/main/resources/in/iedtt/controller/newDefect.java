@@ -8,9 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import in.iedtt.dao.UserDao;
-import in.iedtt.entity.Response;
-
 /**
  * Servlet implementation class newDefect
  */
