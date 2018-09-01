@@ -85,6 +85,8 @@ CREATE TABLE `defects` (
   `eta` datetime NOT NULL,
   `defect_date` datetime NOT NULL,
   `rca` text NOT NULL,
+  `project_name` varchar(100) NOT NULL,
+  `module_name` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8;
 
@@ -93,18 +95,18 @@ CREATE TABLE `defects` (
 --
 
 /*!40000 ALTER TABLE `defects` DISABLE KEYS */;
-INSERT INTO `defects` (`id`,`description`,`status`,`identified_by`,`assigned_to`,`eta`,`defect_date`,`rca`) VALUES 
- (1,'new','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-25 00:08:00','2018-01-25 00:08:00','ads'),
- (2,'new','1','sap.koduri@gmail.com','emai@gmail.com','2018-01-25 00:05:00','2018-01-25 00:08:00','ads'),
- (3,'new','1','sap.koduri@gmail.com','emai@gmail.com','2018-01-25 00:05:00','2018-01-25 00:08:00','ads'),
- (4,'new defect','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-27 00:08:00','2018-01-01 00:08:00','asdas'),
- (5,'new defect','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-27 00:08:00','2018-01-01 00:08:00','asdas'),
- (6,'adsf','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-27 00:08:00','2018-01-08 00:08:00','sdafsdf'),
- (7,'adsf','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-27 00:08:00','2018-01-08 00:08:00','sdafsdf'),
- (8,'new defect','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-23 00:08:00','2018-01-08 00:08:00',''),
- (9,'new defect','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-16 00:08:00','2018-01-01 00:08:00',''),
- (10,'new defect','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-29 00:08:00','2018-01-01 00:08:00',''),
- (11,'dwqe','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-30 00:08:00','2018-01-22 00:08:00','');
+INSERT INTO `defects` (`id`,`description`,`status`,`identified_by`,`assigned_to`,`eta`,`defect_date`,`rca`,`project_name`,`module_name`) VALUES 
+ (1,'new','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-25 00:08:00','2018-01-25 00:08:00','ads','',''),
+ (2,'new','1','sap.koduri@gmail.com','emai@gmail.com','2018-01-25 00:05:00','2018-01-25 00:08:00','ads','',''),
+ (3,'new','1','sap.koduri@gmail.com','emai@gmail.com','2018-01-25 00:05:00','2018-01-25 00:08:00','ads','',''),
+ (4,'new defect','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-27 00:08:00','2018-01-01 00:08:00','asdas','',''),
+ (5,'new defect','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-27 00:08:00','2018-01-01 00:08:00','asdas','',''),
+ (6,'adsf','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-27 00:08:00','2018-01-08 00:08:00','sdafsdf','',''),
+ (7,'adsf','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-27 00:08:00','2018-01-08 00:08:00','sdafsdf','',''),
+ (8,'new defect','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-23 00:08:00','2018-01-08 00:08:00','','',''),
+ (9,'new defect','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-16 00:08:00','2018-01-01 00:08:00','','',''),
+ (10,'new defect','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-29 00:08:00','2018-01-01 00:08:00','','',''),
+ (11,'dwqe','0','sap.koduri@gmail.com','emai@gmail.com','2018-01-30 00:08:00','2018-01-22 00:08:00','','','');
 /*!40000 ALTER TABLE `defects` ENABLE KEYS */;
 
 
@@ -114,10 +116,10 @@ INSERT INTO `defects` (`id`,`description`,`status`,`identified_by`,`assigned_to`
 
 DROP TABLE IF EXISTS `project`;
 CREATE TABLE `project` (
-  `project_id` int(10) unsigned NOT NULL,
-  `name` text NOT NULL,
-  `module` int(10) unsigned NOT NULL,
-  PRIMARY KEY (`module`,`project_id`) USING BTREE
+  `project_name` varchar(100) NOT NULL,
+  `description` text NOT NULL,
+  `module_name` varchar(100) NOT NULL,
+  PRIMARY KEY (`module_name`,`project_name`) USING BTREE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -125,6 +127,8 @@ CREATE TABLE `project` (
 --
 
 /*!40000 ALTER TABLE `project` DISABLE KEYS */;
+INSERT INTO `project` (`project_name`,`description`,`module_name`) VALUES 
+ ('IEDTT','new project iedtt','login');
 /*!40000 ALTER TABLE `project` ENABLE KEYS */;
 
 
