@@ -118,6 +118,9 @@ public class UserDao {
 				user  = new User();
 				user.setEmailId(rs.getString(1));
 				user.setDatOfRegistration(rs.getTimestamp(3));
+				user.setRole(rs.getString(6));
+				user.setUserActive(rs.getBoolean(5));
+				user.setTeam(rs.getInt(7));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
