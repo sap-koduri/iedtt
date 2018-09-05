@@ -28,7 +28,7 @@ public class DefectDao {
 		ResultSet rs = null;
 		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Defect creation Method called %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 		try {
-			String query = "insert into defects (description,identified_by,assigned_to,defect_date,status,rca,eta) values (?,?,?,?,?,?,?)";
+			String query = "insert into defects (description,identified_by,assigned_to,defect_date,status,rca,eta,project_name,module_name) values (?,?,?,?,?,?,?,?,?)";
 			connection = DBUtil.getconnection();
 			pstmt = connection.prepareStatement(query,Statement.RETURN_GENERATED_KEYS);
 			pstmt.setString(1, defect.getDescription());
@@ -38,6 +38,8 @@ public class DefectDao {
 			pstmt.setString(5, defect.getStatus());
 			pstmt.setString(6, defect.getRca());
 			pstmt.setString(7, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(defect.getEta()));
+			pstmt.setString(8, defect.getProjectName());
+			pstmt.setString(9, defect.getModuleName());
 			System.err.println("Prepared Statement for Create Defect after bind variables set:\n\t" + pstmt.toString());
 			pstmt.executeUpdate();
 			rs = pstmt.getGeneratedKeys();

@@ -52,6 +52,12 @@
   	<description></description>
   	<servlet-class>in.iedtt.controller.DisableUserServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>GetProjectModulesServlet</servlet-name>
+  	<display-name>GetProjectModulesServlet</display-name>
+  	<description></description>
+  	<servlet-class>in.iedtt.controller.GetProjectModulesServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>UserRegistrationServlet</servlet-name>
   	<url-pattern>/UserRegistrationServlet</url-pattern>
@@ -83,5 +89,9 @@
   <servlet-mapping>
   	<servlet-name>DisableUserServlet</servlet-name>
   	<url-pattern>/DisableUserServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>GetProjectModulesServlet</servlet-name>
+  	<url-pattern>/GetProjectModulesServlet</url-pattern>
   </servlet-mapping>
 </web-app>
