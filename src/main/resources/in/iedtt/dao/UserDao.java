@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -158,6 +159,46 @@ public class UserDao {
 		return response;
 	}
 
+	public HashMap<String, UserProfile> getUserProfilesMap() {
+		HashMap<String, UserProfile> userProfilesMap = new HashMap<String, UserProfile>();
+		PreparedStatement pstmt = null;
+		Connection connection = null;
+		ResultSet rs = null;
+		String query = "select * from user_profile where is_user_profile_active = ?";
+		connection = DBUtil.getconnection();
+		try {
+			pstmt = connection.prepareStatement(query);
+			pstmt.setBoolean(1,true);
+			System.err.println("Prepared Statement for findAllUsers after bind variables set:\n\t" + pstmt.toString());
+			rs=pstmt.executeQuery();
+	
+			try {
+				while(null != rs && rs.next()) {
+					
+					UserProfile profile = new UserProfile();
+					profile.setEmailId(rs.getString(1));
+					profile.setFirstName(rs.getString(2));
+					profile.setLastName(rs.getString(3));
+					profile.setGender(rs.getString(4));
+					profile.setMobile(rs.getString(5));
+					profile.setSecretQuestion1(rs.getString(6));
+					profile.setSecretQuestionAnswer1(rs.getString(7));
+					profile.setSecretQuestion2(rs.getString(8));
+					profile.setSecretQuestionAnswer2(rs.getString(9));
+					profile.setIsUserProfileActive(rs.getBoolean(10));
+					userProfilesMap.put(profile.getEmailId(), profile);
+					
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println("getUserProfilesMap Response : " + userProfilesMap);
+		return userProfilesMap;
+	}
+	
 	private List<UserProfile> parseUserIds(ResultSet rs) {
 		List<UserProfile> users = new ArrayList<UserProfile>();
 		try {

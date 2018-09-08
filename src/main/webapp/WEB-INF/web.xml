@@ -58,6 +58,12 @@
   	<description></description>
   	<servlet-class>in.iedtt.controller.GetProjectModulesServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>UpdateDefectServlet</servlet-name>
+  	<display-name>UpdateDefectServlet</display-name>
+  	<description></description>
+  	<servlet-class>in.iedtt.controller.UpdateDefectServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>UserRegistrationServlet</servlet-name>
   	<url-pattern>/UserRegistrationServlet</url-pattern>
@@ -93,5 +99,9 @@
   <servlet-mapping>
   	<servlet-name>GetProjectModulesServlet</servlet-name>
   	<url-pattern>/GetProjectModulesServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>UpdateDefectServlet</servlet-name>
+  	<url-pattern>/UpdateDefectServlet</url-pattern>
   </servlet-mapping>
 </web-app>

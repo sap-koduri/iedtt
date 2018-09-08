@@ -57,8 +57,7 @@ $(document).ready(function() {
 				<section>
 					<div>
 						<div>
-							<h2>HOME</h2>
-							<p><h3>Defects</h3></p>
+							<h2>Defects</h2>
 							<div id="defectsListDiv">
 								<section>
 									

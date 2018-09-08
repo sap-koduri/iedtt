@@ -99,11 +99,11 @@ $( document ).ready(function() {
 												<td>status</td>
 												<td>
 													<select id="status" name="status" required="required" class="rightCell">
-														<option value="0">New</option>
-														<option value="1">Open</option>
-														<option value="2">Fixed</option>
-														<option value="3">Re Test</option>
-														<option value="4">Close</option>
+														<option value="New">New</option>
+<!-- 														<option value="Open">Open</option> -->
+<!-- 														<option value="Fixed">Fixed</option> -->
+<!-- 														<option value="ReTest">Re Test</option> -->
+<!-- 														<option value="Closed">Close</option> -->
 													</select>
 												</td>
 											</tr>
@@ -123,14 +123,14 @@ $( document ).ready(function() {
 												<td>Defect Identified Date</td>
 												<td><input type="date" name="defectDate" id="defectDate" value="" required="required" class="rightCell"/></td>
 											</tr>
-											<tr>
-												<td>ETA</td>
-												<td><input type="date" name="eta" id="eta" value="" required="required" class="rightCell"/></td>
-											</tr>
-											<tr>
-												<td>RCA</td>
-												<td><input type="text" name="rca" id="rca" value="" class="rightCell"/></td>
-											</tr>
+<!-- 											<tr> -->
+<!-- 												<td>ETA</td> -->
+<!-- 												<td><input type="date" name="eta" id="eta" value="" required="required" class="rightCell"/></td> -->
+<!-- 											</tr> -->
+<!-- 											<tr> -->
+<!-- 												<td>RCA</td> -->
+<!-- 												<td><input type="text" name="rca" id="rca" value="" class="rightCell"/></td> -->
+<!-- 											</tr> -->
 											<tr>
 											<td>
 												

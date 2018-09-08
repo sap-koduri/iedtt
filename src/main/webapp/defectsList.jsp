@@ -1,4 +1,6 @@
 <!DOCTYPE html>
+<%@page import="in.iedtt.entity.UserProfile"%>
+<%@page import="java.util.HashMap"%>
 <%@page import="java.util.ArrayList"%>
 <%@page import="in.iedtt.entity.Defect"%>
 <%@page import="java.util.List"%>
@@ -13,11 +15,25 @@
 		statusMessage = resp.getStatusMessage();
 		defects = (List<Defect>)resp.getResponseObject();
 	}
+	
+	 HashMap<String, UserProfile> userProfilesMap = (HashMap<String, UserProfile>)request.getSession().getAttribute("userProfilesMap");
+	 if(userProfilesMap == null){
+		 userProfilesMap = new  HashMap<String, UserProfile>();
+	 }
 %>
 <html lang="en">
 <script type="text/javascript">
 function loadDefectForEdit(defectId) {
 	alert(defectId);
+	 $.post("./UpdateDefectServlet",
+	    	  	{
+		 			defectId:defectId
+	    	    },
+	    	        function(data,status){
+	    	    	if(status == "success")
+	    	            console.log("Data: " + data + "\nStatus: " + status);
+	    	    	
+	    	        });
 }
 </script>
 <head>
@@ -53,7 +69,6 @@ function loadDefectForEdit(defectId) {
 						<thead>
 							<tr class="row100 head">
 								<th class="column100 column2" data-column="column1">Defect Id</th>
-								<th class="column100 column1" data-column="column2">Description</th>
 								<th class="column100 column1" data-column="column3">Project</th>
 								<th class="column100 column1" data-column="column4">Module</th>
 								<th class="column100 column3" data-column="column5">Status</th>
@@ -61,26 +76,25 @@ function loadDefectForEdit(defectId) {
 								<th class="column100 column5" data-column="column7">Assigned To</th>
 								<th class="column100 column6" data-column="column8">ETA</th>
 								<th class="column100 column7" data-column="column9">Date</th>
-								<th class="column100 column8" data-column="column10">RCA</th>
 							</tr>
 						</thead>
 						<tbody>
 						<% for(Defect defect:defects){ %>
 							<tr class="row100">
 								<td class="column100 column2" data-column="column1"><a href="javascript:loadDefectForEdit(<%= defect.getId()%>);"><%= defect.getId()%></a></td>
-								<td class="column100 column1" data-column="column2"><%= defect.getDescription()%></td>
-								<td class="column100 column1" data-column="column3"><%= defect.getDescription()%></td>
-								<td class="column100 column1" data-column="column4"><%= defect.getDescription()%></td>
+								<td class="column100 column1" data-column="column3"><%= defect.getProjectName()%></td>
+								<td class="column100 column1" data-column="column4"><%= defect.getModuleName()%></td>
 								<td class="column100 column3" data-column="column5"><%= defect.getStatus()%></td>
-								<td class="column100 column4" data-column="column6"><%= defect.getIdentifiedBy()%></td>
-								<td class="column100 column5" data-column="column7"><%= defect.getAssignedTo()%></td>
-								<td class="column100 column6" data-column="column8"><%= defect.getEta()%></td>
+								<td class="column100 column4" data-column="column6"><%= userProfilesMap.get(defect.getIdentifiedBy()).getFirstName() + "  " +userProfilesMap.get(defect.getIdentifiedBy()).getLastName() %></td>
+								<td class="column100 column5" data-column="column7"><%= userProfilesMap.get(defect.getAssignedTo()).getFirstName() + "  " + userProfilesMap.get(defect.getAssignedTo()).getLastName()%></td>
+								<td class="column100 column6" data-column="column8"><%= defect.getEta() == null ? "" : defect.getEta() %></td>
 								<td class="column100 column7" data-column="column9"><%= defect.getDefectDate()%></td>
-								<td class="column100 column8" data-column="column10"><%= defect.getRca()%></td>
 							</tr>
 						<%} %>
 						</tbody>
 					</table>
+				</div>
+				<div id="defectDetailsDiv">
 				</div>
 	</div>
 

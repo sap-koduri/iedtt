@@ -1,6 +1,7 @@
 package in.iedtt.controller;
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -14,6 +15,7 @@ import in.iedtt.dao.UserDao;
 import in.iedtt.entity.Project;
 import in.iedtt.entity.Response;
 import in.iedtt.entity.User;
+import in.iedtt.entity.UserProfile;
 
 public class UserLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -41,6 +43,8 @@ public class UserLoginServlet extends HttpServlet {
 			ProjectDao projectDao = new ProjectDao();
 			List<Project> allProjects = projectDao.getAllProjects();
 			request.getSession().setAttribute("allProjects", allProjects);
+			HashMap<String, UserProfile> userProfilesMap = userDao.getUserProfilesMap();
+			request.getSession().setAttribute("userProfilesMap", userProfilesMap);
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("./home.jsp");
 	        requestDispatcher.forward(request, response);
 		}

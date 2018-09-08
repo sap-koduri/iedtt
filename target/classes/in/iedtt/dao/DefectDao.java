@@ -37,7 +37,11 @@ public class DefectDao {
 			pstmt.setString(4, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(defect.getDefectDate()));
 			pstmt.setString(5, defect.getStatus());
 			pstmt.setString(6, defect.getRca());
-			pstmt.setString(7, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(defect.getEta()));
+			if(defect.getEta() == null) {
+				pstmt.setString(7,null);
+			}else {
+				pstmt.setString(7,new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(defect.getEta()));
+			}
 			pstmt.setString(8, defect.getProjectName());
 			pstmt.setString(9, defect.getModuleName());
 			System.err.println("Prepared Statement for Create Defect after bind variables set:\n\t" + pstmt.toString());
@@ -86,10 +90,18 @@ public class DefectDao {
 		defect.setRca(rca);
 		String eDate = (String)request.getParameter("eta");
 		defect.setEta(getFormatedDate(eDate));
+		
+		String projectName =  (String)request.getParameter("projectName");
+		defect.setProjectName(projectName);
+		String moduleName =  (String)request.getParameter("moduleName");
+		defect.setModuleName(moduleName);
 		return defect;
 		
 	}
 	private Date getFormatedDate(String dateString) {
+		if(dateString == null) {
+			return null;
+		}
 		DateFormat format = new SimpleDateFormat("yyyy-mm-dd", Locale.ENGLISH);
 		Date defectDate = null;
 		try {
@@ -117,6 +129,24 @@ public class DefectDao {
 		return response;
 	}
 
+	public Response getDefectById(int defectId) {
+		Response response = new Response();
+		List<Defect> defects = new ArrayList<Defect>();
+		String query = "select * from defects where id = " + defectId;
+		defects = parseDefects(DBUtil.getData(query));
+		if(defects.size() ==0) {
+			response.setStatus("noDataFound");
+			response.setStatusMessage("getAllDefects fail");
+			response.setResponseObject(defects);
+		}else {
+			response.setStatus("Success");
+			response.setStatusMessage("getAllDefects success");
+		}
+		response.setResponseObject(defects);
+		System.out.println("getAllDefects Response : " + response);
+		return response;
+	}
+	
 	private List<Defect> parseDefects(ResultSet rs) {
 		List<Defect> defects = new ArrayList<Defect>();
 		try {
@@ -130,6 +160,8 @@ public class DefectDao {
 				defect.setEta(rs.getTimestamp(6));
 				defect.setDefectDate(rs.getTimestamp(7));
 				defect.setRca(rs.getString(8));
+				defect.setProjectName(rs.getString(9));
+				defect.setModuleName(rs.getString(10));
 				defects.add(defect);
 			}
 		} catch (SQLException e) {
