@@ -24,16 +24,21 @@
 <html lang="en">
 <script type="text/javascript">
 function loadDefectForEdit(defectId) {
-	alert(defectId);
-	 $.post("./UpdateDefectServlet",
-	    	  	{
-		 			defectId:defectId
-	    	    },
-	    	        function(data,status){
-	    	    	if(status == "success")
-	    	            console.log("Data: " + data + "\nStatus: " + status);
-	    	    	
-	    	        });
+// 	alert(defectId);
+// 	 $.post("./UpdateDefectServlet",
+// 	    	  	{
+// 		 			defectId:defectId
+// 	    	    },
+// 	    	    function(data,status){
+// 	    	   		if(status == "success"){
+// 	    	   			defectDetailsDiv
+// 	    	        	console.log("Data: " + data + " Status: " + status);
+// 	    	   		}
+// 	    	    });
+	    $( "#defectDetailsDiv").load("./UpdateDefectServlet?defectId="+defectId, function() {
+    		console.log("defects details are  loaded");
+    });
+// 	document.location.href = './UpdateDefectServlet?defectId='+defectId;
 }
 </script>
 <head>
