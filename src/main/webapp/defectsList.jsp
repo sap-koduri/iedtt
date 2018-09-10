@@ -23,6 +23,19 @@
 %>
 <html lang="en">
 <script type="text/javascript">
+
+//Get the modal
+var modal = document.getElementById('myModal');
+//Get the <span> element that closes the modal
+var span = document.getElementsByClassName("close")[0];
+window.onclick = function(event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+span.onclick = function() {
+    modal.style.display = "none";
+}
 function loadDefectForEdit(defectId) {
 // 	alert(defectId);
 // 	 $.post("./UpdateDefectServlet",
@@ -35,10 +48,11 @@ function loadDefectForEdit(defectId) {
 // 	    	        	console.log("Data: " + data + " Status: " + status);
 // 	    	   		}
 // 	    	    });
-	    $( "#defectDetailsDiv").load("./UpdateDefectServlet?defectId="+defectId, function() {
-    		console.log("defects details are  loaded");
-    });
-// 	document.location.href = './UpdateDefectServlet?defectId='+defectId;
+// 	    $( "#defectDetailsDiv").load("./UpdateDefectServlet?defectId="+defectId, function() {
+//     		console.log("defects details are  loaded");
+//     });
+//  	modal.style.display = "block";
+	document.location.href = './UpdateDefectServlet?defectId='+defectId;
 }
 </script>
 <head>
@@ -61,7 +75,7 @@ function loadDefectForEdit(defectId) {
 	<link rel="stylesheet" type="text/css" href="css/util.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 <!--===============================================================================================-->
-
+	<link rel="stylesheet" type="text/css" href="css/modal.css">
 <script type="text/javascript">
 	console.log("all defects list response : " + "<%=resp%>");
 </script>
@@ -99,8 +113,19 @@ function loadDefectForEdit(defectId) {
 						</tbody>
 					</table>
 				</div>
-				<div id="defectDetailsDiv">
-				</div>
+			<!-- Defect Modal content -->
+			  <div class="modal-content">
+			    <div class="modal-header">
+			      <span class="close">&times;</span>
+			      <h2>Update Defect Here</h2>
+			    </div>
+			    <div class="modal-body">
+			      <p>Some text in the Modal Body</p>
+			    </div>
+			    <div class="modal-footer">
+			      <h3>Comments</h3>
+			    </div>
+			  </div>
 	</div>
 
 

@@ -38,6 +38,7 @@
 }
 </style>
 <script type="text/javascript">
+var defectStatus = '<%=defect.getStatus()%>';
 $( document ).ready(function() {
 	console.log('<%=defect%>');
     $("#defectId").val('<%=defect.getId()%>');
@@ -46,11 +47,19 @@ $( document ).ready(function() {
     $("#moduleName").val('<%=defect.getModuleName()%>');
     $("#status").val('<%=defect.getStatus()%>');
     $("#identifiedBy").val('<%=defect.getIdentifiedBy()%>');
-    $("#assignedTo").val('<%=defect.getAssignedTo()%>');
-    $("#defectDate").val('<%=defect.getDefectDate()%>');
-    $("#eta").val('<%=defect.getEta()%>');
-    $("#rca").val('<%=defect.getRca()%>');
+    $("#assignedTo").append('<%=usrNames%>');
+    $("#assignedTo").val('<%=defect.getAssignedTo()!= null ?defect.getAssignedTo():""%>');
+    $("#defectDate").val('<%=defect.getDefectDate()!= null ?defect.getDefectDate():""%>');
+    $("#eta").val('<%=defect.getEta()!= null ?defect.getEta():"" %>');
+    $("#rca").val('<%=defect.getRca()!= null ?defect.getRca():"" %>');
     
+});
+$("#status").change(function(){
+	
+	if(defectStatus != this.val){
+		
+	}
+	
 });
 </script>
 </head>
@@ -96,8 +105,10 @@ $( document ).ready(function() {
 			</tr>
 			<tr>
 				<td>assignedTo</td>
-				<td><input type="text" id="assignedTo" name="assignedTo"
-					required="required" class="rightCell"></td>
+				<td>
+					<select id="assignedTo" name="assignedTo" required="required" class="rightCell">
+					</select>
+				</td>
 			</tr>
 			<tr>
 				<td>Defect Identified Date</td>

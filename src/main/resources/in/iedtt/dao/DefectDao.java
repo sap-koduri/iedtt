@@ -169,6 +169,47 @@ public class DefectDao {
 		}
 		return defects;
 	}
+	public Response updateDefect(Defect defect) {
+		Response response = new Response();
+		PreparedStatement pstmt = null;
+		Connection connection = null;
+		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% updateDefect Method called %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+		try {
+			String query = "update defects set assigned_to=?,status=?,rca=?,eta=? where id = ?";
+			connection = DBUtil.getconnection();
+			pstmt = connection.prepareStatement(query);
+			pstmt.setString(1, defect.getAssignedTo());
+			pstmt.setString(2, defect.getStatus());
+			pstmt.setString(3, defect.getRca());
+			if(defect.getEta() == null) {
+				pstmt.setString(4,null);
+			}else {
+				pstmt.setString(4,new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(defect.getEta()));
+			}
+			pstmt.setInt(5, defect.getId());
+			System.err.println("Prepared Statement for updateDefect after bind variables set:\n\t" + pstmt.toString());
+			int executeUpdateResponse = pstmt.executeUpdate();
+			if(executeUpdateResponse != 0 ){
+				response.setStatus("Success");
+				response.setStatusMessage("Defect Update Successfully. ");
+				response.setResponseObject(defect);
+			}else {
+				response.setStatus("Fail");
+				response.setStatusMessage("Defect Post Fail");
+			}
+		} catch (SQLException e) {
+			response.setStatus("Exception");
+			response.setStatusMessage("Defect Post Error");
+			e.printStackTrace();
+		} finally{
+			try{
+				if(pstmt != null) pstmt.close();
+			} catch(Exception ex){}
+		}
+		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Defect creation response %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
+		System.out.println(response);
+		return response;
+	}
 	
 	public static void main(String[] args) {
 		DefectDao dao  = new DefectDao();
