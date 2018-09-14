@@ -22,6 +22,7 @@
 	 }
 %>
 <html lang="en">
+<link rel="stylesheet" href="./css/modal.css">
 <script type="text/javascript">
 
 //Get the modal
@@ -51,7 +52,10 @@ function loadDefectForEdit(defectId) {
 // 	    $( "#defectDetailsDiv").load("./UpdateDefectServlet?defectId="+defectId, function() {
 //     		console.log("defects details are  loaded");
 //     });
-//  	modal.style.display = "block";
+//     $( "#defectDetailsDiv").load("./UpdateDefectServlet?defectId="+defectId, function() {
+//     		console.log("defects list loaded");
+//     });
+//   	modal.style.display = "block";
 	document.location.href = './UpdateDefectServlet?defectId='+defectId;
 }
 </script>
@@ -83,7 +87,7 @@ function loadDefectForEdit(defectId) {
 <body>
 	
 	<div class="limiter">
-				<div class="table100 ver2 m-b-110" style="overflow:scroll; height:500px;">
+				<div class="table100 ver2 m-b-110" style="overflow:scroll; max-height:500px; min-height:0px; overflow-x: hidden;">
 					<table data-vertable="ver2">
 						<thead>
 							<tr class="row100 head">
@@ -113,23 +117,7 @@ function loadDefectForEdit(defectId) {
 						</tbody>
 					</table>
 				</div>
-			<!-- Defect Modal content -->
-			  <div class="modal-content">
-			    <div class="modal-header">
-			      <span class="close">&times;</span>
-			      <h2>Update Defect Here</h2>
-			    </div>
-			    <div class="modal-body">
-			      <p>Some text in the Modal Body</p>
-			    </div>
-			    <div class="modal-footer">
-			      <h3>Comments</h3>
-			    </div>
-			  </div>
 	</div>
-
-
-	
 
 <!--===============================================================================================-->	
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>

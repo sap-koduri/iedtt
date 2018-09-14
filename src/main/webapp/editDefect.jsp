@@ -1,9 +1,20 @@
+<%@page import="java.text.SimpleDateFormat"%>
 <%@page import="in.iedtt.entity.Defect"%>
 <%@page import="in.iedtt.entity.UserProfile"%>
 <%@page import="java.util.List"%>
 <%@page import="in.iedtt.entity.Response"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
+<head>
+<title>Online Defect Tracking System</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<link rel="stylesheet" href="layout/styles/layout.css" type="text/css" />
+<script src="js/jquery.1.9.1.min.js"></script>
+<style>
+.rightCell {
+	width: 173px;
+}
+</style>
 <%
 	String userId = String.valueOf(request.getSession().getAttribute("userId"));
 	Response findAllUsers = (Response) request.getSession().getAttribute("findAllUsers");
@@ -29,14 +40,7 @@
 	}
 %>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
-<link rel="stylesheet" href="layout/styles/layout.css" type="text/css" />
-<script src="js/jquery.1.9.1.min.js"></script>
-<style>
-.rightCell {
-	width: 173px;
-}
-</style>
+
 <script type="text/javascript">
 var defectStatus = '<%=defect.getStatus()%>';
 $( document ).ready(function() {
@@ -52,7 +56,6 @@ $( document ).ready(function() {
     $("#defectDate").val('<%=defect.getDefectDate()!= null ?defect.getDefectDate():""%>');
     $("#eta").val('<%=defect.getEta()!= null ?defect.getEta():"" %>');
     $("#rca").val('<%=defect.getRca()!= null ?defect.getRca():"" %>');
-    
 });
 $("#status").change(function(){
 	
@@ -64,72 +67,139 @@ $("#status").change(function(){
 </script>
 </head>
 <body id="top">
-
-	<form method="post" action="#">
-		<table>
+<div class="wrapper col1">
+  <div id="topbar">
+  </div>
+</div>
+<div class="wrapper col2">
+  <div id="header">
+    <div class="fl_left">
+      <h1><a href="./home.jsp">Online Defect Tracking System</a></h1>
+      <p>ODTS</p>
+    </div>
+    <ul id="topnav">
+     <li><a href="./newDefect">Defect</a></li>
+      <li><a href="./adminPanel.jsp">Admin Page</a></li>
+    </ul>
+    <br class="clear"/>
+  </div>
+</div>
+<div class="wrapper col3">
+  <div id="intro">
+			<div>
+				<section>
+					<div>
+						<div>
+							<h2>Edit defect here</h2>
+							<div id="defectsListDiv">
+									<form method="post" action="./EditDefectServlet">
+										<table >
+											<tr>
+												<td>Defect Id</td>
+												<td><input type="text" name="defectId" id="defectId" value=""
+													required="required" class="rightCell" readonly="readonly" /></td>
+											</tr>
+											<tr>
+												<td>Description</td>
+												<td><input type="text" name="description" id="description"
+													value="" required="required" class="rightCell" readonly="readonly" /></td>
+											</tr>
+											<tr>
+												<td>Project Name</td>
+												<td><input type="text" id="projectName" name="projectName"
+													required="required" class="rightCell" readonly="readonly" /></td>
+											</tr>
+											<tr>
+												<td>Module Name</td>
+												<td><input type="text" id="moduleName" name="moduleName"
+													required="required" class="rightCell" readonly="readonly" /></td>
+											</tr>
+											<tr>
+												<td>status</td>
+												<td><select id="status" name="status" required="required"
+													class="rightCell">
+														<option value="New">New</option>
+														<option value="Open">Open</option>
+														<option value="Fixed">Fixed</option>
+														<option value="ReTest">Re Test</option>
+														<option value="Closed">Close</option>
+												</select></td>
+											</tr>
+											<tr>
+												<td>identifiedBy</td>
+												<td><input type="email" name="identifiedBy" id="identifiedBy"
+													value="" required="required" class="rightCell" readonly="readonly" /></td>
+											</tr>
+											<tr>
+												<td>assignedTo</td>
+												<td>
+													<select id="assignedTo" name="assignedTo" required="required" class="rightCell">
+													</select>
+												</td>
+											</tr>
+											<tr>
+												<td>Defect Identified Date</td>
+												<td><input type="datetime" name="defectDate" id="defectDate"
+													value="" required="required" class="rightCell" readonly="readonly" /></td>
+											</tr>
+											<tr>
+												<td>ETA</td>
+												<td><input type="date" name="eta" id="eta" value=""
+													required="required" class="rightCell" placeholder="MM/DD/YYYY"/></td>
+											</tr>
+											<tr>
+												<td>RCA</td>
+												<td><textarea  name="rca" id="rca" 
+													class="rightCell" placeholder="Root Cause of Defect Analysis"></textarea></td>
+											</tr>
+											<tr>
+												<td></td>
+												<td><input type="submit" value="Update" /></td>
+											</tr>
+										</table>
+									</form>
+								</div>
+						</div>
+					</div>
+				</section>
+			</div>
+    
+    
+    <br class="clear" />
+  </div>
+</div>
+<div class="wrapper col5">
+  <div id="footer">
+   
+    <div class="footbox last">
+      <form action="">
+      	<table>
 			<tr>
-				<td>Defect Id</td>
-				<td><input type="text" name="defectId" id="defectId" value=""
-					required="required" class="rightCell" readonly="readonly" /></td>
-			</tr>
-			<tr>
-				<td>Description</td>
-				<td><input type="text" name="description" id="description"
-					value="" required="required" class="rightCell" readonly="readonly" /></td>
-			</tr>
-			<tr>
-				<td>Project Name</td>
-				<td><input type="text" id="projectName" name="projectName"
-					required="required" class="rightCell" readonly="readonly" /></td>
-			</tr>
-			<tr>
-				<td>Module Name</td>
-				<td><input type="text" id="moduleName" name="moduleName"
-					required="required" class="rightCell" readonly="readonly" /></td>
-			</tr>
-			<tr>
-				<td>status</td>
-				<td><select id="status" name="status" required="required"
-					class="rightCell">
-						<option value="New">New</option>
-						<option value="Open">Open</option>
-						<option value="Fixed">Fixed</option>
-						<option value="ReTest">Re Test</option>
-						<option value="Closed">Close</option>
-				</select></td>
-			</tr>
-			<tr>
-				<td>identifiedBy</td>
-				<td><input type="email" name="identifiedBy" id="identifiedBy"
-					value="" required="required" class="rightCell" readonly="readonly" /></td>
-			</tr>
-			<tr>
-				<td>assignedTo</td>
-				<td>
-					<select id="assignedTo" name="assignedTo" required="required" class="rightCell">
-					</select>
-				</td>
-			</tr>
-			<tr>
-				<td>Defect Identified Date</td>
-				<td><input type="text" name="defectDate" id="defectDate"
-					value="" required="required" class="rightCell" readonly="readonly" /></td>
-			</tr>
-			<tr>
-				<td>ETA</td>
-				<td><input type="text" name="eta" id="eta" value=""
-					required="required" class="rightCell" /></td>
-			</tr>
-			<tr>
-				<td>RCA</td>
-				<td><input type="text" name="rca" id="rca" value=""
-					class="rightCell" /></td>
-			</tr>
-			<tr>
-				<td></td>
-				<td><input type="submit" value="Update" /></td>
+				<td>Comment</td>
+				<td><textarea name="comment" id="comment" required="required" readonly="readonly" style="width:768px;"></textarea></td>
+				<td><input type="submit" value="Add"  style="width:100px;"/></td>
 			</tr>
 		</table>
-	</form>
+      </form>
+      <address>
+     	<table style="width: 969px;">
+			<tr>
+				<td style="width:100px;"><label id="commentor"></label></td>
+				<td style="width:600px;"><label id="comment"></label></td>
+				<td style="width:100px;"><label id="commentDate"></label></td>
+			</tr>
+		</table>
+      </address>
+    </div>
+    <br class="clear" />
+  </div>
+</div>
+<div class="wrapper col6">
+  <div id="copyright">
+    <p class="fl_left">Copyright &copy; 2018 - All Rights Reserved - <a href="#">Laxmi</a></p>
+    <p class="fl_right">. <a target="_blank" href="#" title="More info">.</a></p>
+    <br class="clear" />
+  </div>
+</div>
 </body>
 </html>

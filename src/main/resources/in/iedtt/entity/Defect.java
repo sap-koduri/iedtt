@@ -9,8 +9,8 @@ public class Defect {
 	private String status;
 	private String identifiedBy;
 	private String assignedTo;
-	private Date eta;
-	private Date defectDate;
+	private String eta;
+	private String defectDate;
 	private String rca;
 	private String projectName;
 	private String moduleName;
@@ -18,8 +18,8 @@ public class Defect {
 	public Defect() {
 	}
 
-	public Defect(Integer id, String description, String status, String identifiedBy, String assignedTo, Date eta,
-			Date defectDate, String rca, String projectName, String moduleName) {
+	public Defect(Integer id, String description, String status, String identifiedBy, String assignedTo, String eta,
+			String defectDate, String rca, String projectName, String moduleName) {
 		super();
 		this.id = id;
 		this.description = description;
@@ -73,19 +73,19 @@ public class Defect {
 		this.assignedTo = assignedTo;
 	}
 
-	public Date getEta() {
+	public String getEta() {
 		return eta;
 	}
 
-	public void setEta(Date eta) {
+	public void setEta(String eta) {
 		this.eta = eta;
 	}
 
-	public Date getDefectDate() {
+	public String getDefectDate() {
 		return defectDate;
 	}
 
-	public void setDefectDate(Date defectDate) {
+	public void setDefectDate(String defectDate) {
 		this.defectDate = defectDate;
 	}
 

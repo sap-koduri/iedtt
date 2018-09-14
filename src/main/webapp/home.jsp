@@ -59,9 +59,6 @@ $(document).ready(function() {
 						<div>
 							<h2>Defects</h2>
 							<div id="defectsListDiv">
-								<section>
-									
-								</section>
 							</div>
 						</div>
 					</div>

@@ -64,6 +64,12 @@
   	<description></description>
   	<servlet-class>in.iedtt.controller.UpdateDefectServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>EditDefectServlet</servlet-name>
+  	<display-name>EditDefectServlet</display-name>
+  	<description></description>
+  	<servlet-class>in.iedtt.controller.EditDefectServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>UserRegistrationServlet</servlet-name>
   	<url-pattern>/UserRegistrationServlet</url-pattern>
@@ -103,5 +109,9 @@
   <servlet-mapping>
   	<servlet-name>UpdateDefectServlet</servlet-name>
   	<url-pattern>/UpdateDefectServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>EditDefectServlet</servlet-name>
+  	<url-pattern>/EditDefectServlet</url-pattern>
   </servlet-mapping>
 </web-app>
