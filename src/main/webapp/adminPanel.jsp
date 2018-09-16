@@ -103,7 +103,7 @@
 		  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
 		  <a href="./userRoleUpdate.jsp">Add Role</a>
 		  <a href="./addProject.jsp">Add Project</a>
-		  <a href="./report.jsp">Reports</a>
+		  <a href="./ReportsServlet">Reports</a>
 		  <a href="./disableUser.jsp">Disable User</a>
 		</div>	
 		<div id="pageLandingDiv">

@@ -35,7 +35,7 @@ public class EditDefectServlet extends HttpServlet {
 		DefectDao defectDao = new DefectDao();
 		defect = defectDao.getNewDefect(request);
 		Response updateDefectResp = defectDao.updateDefect(defect);
-		request.setAttribute("response", updateDefectResp);
+		request.getSession().setAttribute("response", updateDefectResp);
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("./home.jsp");
 	    requestDispatcher.forward(request, response);
 	}

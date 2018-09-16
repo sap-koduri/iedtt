@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="layout/styles/layout.css" type="text/css" />
 <script src="js/jquery.1.9.1.min.js"></script>
 <%
-	Response resp = (Response)request.getAttribute("response");
+	Response resp = (Response)request.getSession().getAttribute("response");
 	String status = null;
 	String statusMessage = null;
 	if(resp != null){

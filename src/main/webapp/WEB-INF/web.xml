@@ -70,6 +70,18 @@
   	<description></description>
   	<servlet-class>in.iedtt.controller.EditDefectServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>NewCommentServlet</servlet-name>
+  	<display-name>NewCommentServlet</display-name>
+  	<description></description>
+  	<servlet-class>in.iedtt.controller.NewCommentServlet</servlet-class>
+  </servlet>
+  <servlet>
+  	<servlet-name>ReportsServlet</servlet-name>
+  	<display-name>ReportsServlet</display-name>
+  	<description></description>
+  	<servlet-class>in.iedtt.controller.ReportsServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>UserRegistrationServlet</servlet-name>
   	<url-pattern>/UserRegistrationServlet</url-pattern>
@@ -113,5 +125,13 @@
   <servlet-mapping>
   	<servlet-name>EditDefectServlet</servlet-name>
   	<url-pattern>/EditDefectServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>NewCommentServlet</servlet-name>
+  	<url-pattern>/NewCommentServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>ReportsServlet</servlet-name>
+  	<url-pattern>/ReportsServlet</url-pattern>
   </servlet-mapping>
 </web-app>

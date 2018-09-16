@@ -1,6 +1,8 @@
 package in.iedtt.controller;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -9,42 +11,34 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import in.iedtt.dao.DefectCommentDao;
-import in.iedtt.dao.DefectDao;
 import in.iedtt.entity.DefectComment;
 import in.iedtt.entity.Response;
 
-/**
- * Servlet implementation class UpdateDefectServlet
- */
-public class UpdateDefectServlet extends HttpServlet {
+public class NewCommentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public UpdateDefectServlet() {
+    public NewCommentServlet() {
         super();
-        // TODO Auto-generated constructor stub
     }
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		DefectDao defectDao = new DefectDao();
+		DefectComment comment = new DefectComment();
 		DefectCommentDao commentDao = new DefectCommentDao();
-		String id = request.getParameter("defectId");
-		int defectId = Integer.valueOf(id);
-		Response defectByIdResponse = defectDao.getDefectById(defectId);
-		request.getSession().setAttribute("response", defectByIdResponse);
+		String commentor = (request.getSession() !=null)? (String) request.getSession().getAttribute("userId"):"";
+		comment.setCommentor(commentor);
+		String commentMsg = request.getParameter("comment");
+		comment.setComment(commentMsg);
+		 String defect = (String)request.getParameter("defectId");
+		int defectId = (defect != null)?Integer.valueOf(defect):0;
+		comment.setDefectId(defectId);
+		comment.setDate(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
+		Response logCommentResponse = commentDao.logComment(comment);
+		request.setAttribute("logCommentResponse", logCommentResponse);
 		List<DefectComment> commentsByDefectId = commentDao.getCommentsByDefectId(defectId);
 		request.getSession().setAttribute("commentsByDefectId", commentsByDefectId);
 		request.getRequestDispatcher("./editDefect.jsp").forward(request, response);
 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
 	}

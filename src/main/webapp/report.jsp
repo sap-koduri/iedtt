@@ -3,9 +3,38 @@
 <head>
 <title>Online Defect Tracking System</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
+<style type="text/css">
+	.rightCell{
+		width: 143px;
+	}
+</style>
 <link rel="stylesheet" href="layout/styles/layout.css" type="text/css" />
 <script src="js/jquery.1.9.1.min.js"></script>
-
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+	// Load google charts
+	google.charts.load('current', {'packages':['corechart']});
+	google.charts.setOnLoadCallback(drawChart);
+	
+	// Draw the chart and set the chart values
+	function drawChart() {
+	  var data = google.visualization.arrayToDataTable([
+	  ['Defect Status', 'Number of Defects'],
+	  ['New', 10],
+	  ['Open',15],
+	  ['Fixed',20],
+	  ['Re Test',25],
+	  ['Closed', 30]
+	]);
+	
+	  // Optional; add a title and set the width and height of the chart
+	  var options = {'title':'Defects Report', 'width':550, 'height':400};
+	
+	  // Display the chart inside the <div> element with id="piechart"
+	  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+	  chart.draw(data, options);
+	}
+</script>
 </head>
 <body id="top">
 <div class="wrapper col1">
@@ -30,119 +59,61 @@
 			<div>
 				<section>
 					<div id="regDiv">
-						<h2>Project</h2>
-						<p><h3>registration</h3></p>
+						<h3>Report</h3>
 						<div>
-						<section>
-							<form method="post" action="./ProjectRegistrationServlet">
-								<table>
-									<tr>
-										<td>
-											<label for="First Name">First Name</label>
-										</td>
-										<td>
-											<input type="text" name="firstName" id="firstName" required="required"/>
-										</td>
-									  </tr>
-									<tr>
-										<td>
-											<label for="Last Name">Last Name</label>
-												</td>
-												<td>
-													<input type="text" name="lastName" id="lastName" required="required"/>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<label for="gender">Gender</label>
-												</td>
-												<td>
-													<select name="gender" id="gender" style="width:173px;">
-														<option name="male" id="male">Male</option>
-														<option name="female" id="female">Female</option>
-													</select>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<label for="mobile">Mobile</label>
-												</td>
-												<td>
-													<input type="number" name="mobile" id="mobile" required="required"/>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<label for="email">Email</label>
-												</td>
-												<td>
-													<input type="email" name="emailId" id="emailId" required="required"/>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<label for="password">Password</label>
-												</td>
-												<td>
-													<input type="password" name="password" id="password" required="required"/>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<label for="Security Question 1">Security Question 1</label>
-												</td>
-												<td>
-													<select name="securityQuestion1" id="securityQuestion1" style="width:173px;">
-														<option name="fmn" id="fmn">First Mobile Number</option>
-														<option name="fsn" id="fsn">First School Name</option>
-														<option name="wyb" id="wyb">Where Your Born</option>
-													</select>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<label for="Security Question Answer 1">Security Question Answer 1</label>
-												</td>
-												<td>
-													<input type="Text" name="securityQuestionAnswer1" id="securityQuestionAnswer1" required="required"/>
-												</td>
-											</tr>
-											<tr>
-											<tr>
-												<td>
-													<label for="Security Question 2">Security Question 2</label>
-												</td>
-												<td>
-													<select name="securityQuestion2" id="securityQuestion2" style="width:173px;">
-														<option name="bfn" id="bfn">Best Friend Name</option>
-														<option name="mmn" id="mmn">Mother Middle Name</option>
-														<option name="fc" id="fc">Favourite colour</option>
-													</select>
-												</td>
-											</tr>
-											<tr>
-												<td>
-													<label for="Security Question Answer 2">Security Question Answer 2</label>
-												</td>
-												<td>
-													<input type="Text" name="securityQuestionAnswer2" id="securityQuestionAnswer2" required="required"/>
-												</td>
-											</tr>
-											<tr>
-											<tr>
-												<td>
-													
-												</td>
-												<td>
-													<input type="submit" value="Register"/>
-												</td>
-											</tr>
-										</table>
-									</form>
-								</section>
-							</div>
+						<form action="">
+						<table>
+							<tr>
+								<td> <label class="rightCell">From Date</label> </td>
+								<td> <label class="rightCell">To Date</label> </td>
+								<td> <label class="rightCell">Status</label> </td>
+								<td> <label class="rightCell">Project</label> </td>
+								<td> <label class="rightCell">Module</label> </td>
+								<td> <label class="rightCell"></label> </td>
+							</tr>
+							<tr>
+								<td>
+									<input type="date" id="fromDate" name="fromDate" placeholder="from date"  class="rightCell"></input>
+								</td>
+								<td>
+									<input type="date" id="toDate" name="toDate" placeholder="to date"  class="rightCell"></input>
+								</td>
+								<td>
+									<select id="status" name="status" required="required" class="rightCell"  class="rightCell">
+										<option value="">Select</option>
+										<option value="New">New</option>
+										<option value="Open">Open</option>
+										<option value="Fixed">Fixed</option>
+										<option value="ReTest">Re Test</option>
+										<option value="Closed">Close</option>
+									</select>
+								</td>
+								<td>
+									<select id="projectName" name="projectName" required="required" class="rightCell">
+									<option value="">Select</option>
+									</select>
+								</td>
+								<td>
+									<select id="moduleName" name="moduleName" required="required" class="rightCell">
+									<option value="">Select</option>
+									</select>
+								</td>
+								<td>
+									<input type="submit" value="Get Report"  class="rightCell"></input>
+								</td>
+							</tr>
+						</table>
+						</form>
 						</div>
-					</section>
+						<div>
+							<section>
+								<div id="piechart">
+									
+								</div>
+							</section>
+						</div>
+					</div>
+				</section>
 			</div>
     <br class="clear" />
   </div>
@@ -160,7 +131,6 @@
 <div class="wrapper col6">
   <div id="copyright">
     <p class="fl_left">Copyright &copy; 2018 - All Rights Reserved - <a href="#">Laxmi</a></p>
-    <p class="fl_right">. <a target="_blank" href="#" title="More info">.</a></p>
     <br class="clear" />
   </div>
 </div>

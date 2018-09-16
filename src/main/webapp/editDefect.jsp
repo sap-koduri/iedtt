@@ -1,3 +1,4 @@
+<%@page import="in.iedtt.entity.DefectComment"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="in.iedtt.entity.Defect"%>
 <%@page import="in.iedtt.entity.UserProfile"%>
@@ -18,7 +19,7 @@
 <%
 	String userId = String.valueOf(request.getSession().getAttribute("userId"));
 	Response findAllUsers = (Response) request.getSession().getAttribute("findAllUsers");
-	Response defectDetails = (Response) request.getAttribute("response");
+	Response defectDetails = (Response) request.getSession().getAttribute("response");
 	Defect defect = new Defect();
 	List<UserProfile> users = null;
 	String usrNames = "";
@@ -38,6 +39,7 @@
 			 }
 		 }
 	}
+	List<DefectComment> commentsByDefectId = (List<DefectComment>)request.getSession().getAttribute("commentsByDefectId");
 %>
 <head>
 
@@ -98,8 +100,6 @@ $("#status").change(function(){
 												<td>Defect Id</td>
 												<td><input type="text" name="defectId" id="defectId" value=""
 													required="required" class="rightCell" readonly="readonly" /></td>
-											</tr>
-											<tr>
 												<td>Description</td>
 												<td><input type="text" name="description" id="description"
 													value="" required="required" class="rightCell" readonly="readonly" /></td>
@@ -108,8 +108,6 @@ $("#status").change(function(){
 												<td>Project Name</td>
 												<td><input type="text" id="projectName" name="projectName"
 													required="required" class="rightCell" readonly="readonly" /></td>
-											</tr>
-											<tr>
 												<td>Module Name</td>
 												<td><input type="text" id="moduleName" name="moduleName"
 													required="required" class="rightCell" readonly="readonly" /></td>
@@ -124,8 +122,6 @@ $("#status").change(function(){
 														<option value="ReTest">Re Test</option>
 														<option value="Closed">Close</option>
 												</select></td>
-											</tr>
-											<tr>
 												<td>identifiedBy</td>
 												<td><input type="email" name="identifiedBy" id="identifiedBy"
 													value="" required="required" class="rightCell" readonly="readonly" /></td>
@@ -136,8 +132,6 @@ $("#status").change(function(){
 													<select id="assignedTo" name="assignedTo" required="required" class="rightCell">
 													</select>
 												</td>
-											</tr>
-											<tr>
 												<td>Defect Identified Date</td>
 												<td><input type="datetime" name="defectDate" id="defectDate"
 													value="" required="required" class="rightCell" readonly="readonly" /></td>
@@ -146,58 +140,57 @@ $("#status").change(function(){
 												<td>ETA</td>
 												<td><input type="date" name="eta" id="eta" value=""
 													required="required" class="rightCell" placeholder="MM/DD/YYYY"/></td>
-											</tr>
-											<tr>
 												<td>RCA</td>
 												<td><textarea  name="rca" id="rca" 
 													class="rightCell" placeholder="Root Cause of Defect Analysis"></textarea></td>
 											</tr>
 											<tr>
 												<td></td>
+												<td></td>
+												<td></td>
 												<td><input type="submit" value="Update" /></td>
 											</tr>
 										</table>
 									</form>
-								</div>
+								<form action="./NewCommentServlet" method="post">
+									<input type="hidden" id="defectId" name="defectId" value="<%=defect.getId()%>"/>
+									<table>
+										<tr>
+											<td>Comment</td>
+											<td><textarea name="comment" id="comment" required="required" style="width:728px;"></textarea></td>
+											<td><input type="submit" value="Add"  style="width:100px;"/></td>
+										</tr>
+									</table>
+								</form>
+							</div>
 						</div>
 					</div>
 				</section>
 			</div>
-    
-    
-    <br class="clear" />
+
   </div>
 </div>
 <div class="wrapper col5">
   <div id="footer">
-   
     <div class="footbox last">
-      <form action="">
-      	<table>
-			<tr>
-				<td>Comment</td>
-				<td><textarea name="comment" id="comment" required="required" readonly="readonly" style="width:768px;"></textarea></td>
-				<td><input type="submit" value="Add"  style="width:100px;"/></td>
-			</tr>
-		</table>
-      </form>
-      <address>
+      <h2>Comments</h2>
+      <div style="width: 1000px;overflow:scroll; max-height:120px; min-height:30px; overflow-x: hidden;">
      	<table style="width: 969px;">
+     	<% for(DefectComment defectComment : commentsByDefectId){ %>
 			<tr>
-				<td style="width:100px;"><label id="commentor"></label></td>
-				<td style="width:600px;"><label id="comment"></label></td>
-				<td style="width:100px;"><label id="commentDate"></label></td>
+				<td style="width:100px;"><label style="color: blue;"><%= defectComment.getCommentor()%></label></td>
+				<td style="width:600px;"><label style="color: black;"><%= defectComment.getComment()%></label></td>
+				<td style="width:100px;"><label style="color: gray;"><%= defectComment.getDate()%></label></td>
 			</tr>
+			<%} %>
 		</table>
-      </address>
+		</div>
     </div>
     <br class="clear" />
-  </div>
-</div>
-<div class="wrapper col6">
-  <div id="copyright">
-    <p class="fl_left">Copyright &copy; 2018 - All Rights Reserved - <a href="#">Laxmi</a></p>
-    <p class="fl_right">. <a target="_blank" href="#" title="More info">.</a></p>
+    <br class="clear" />
+    <br class="clear" />
+    <br class="clear" />
+    <br class="clear" />
     <br class="clear" />
   </div>
 </div>
