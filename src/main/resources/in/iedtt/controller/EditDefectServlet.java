@@ -11,6 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import in.iedtt.dao.DefectDao;
 import in.iedtt.entity.Defect;
 import in.iedtt.entity.Response;
+import in.iedtt.util.Mail;
 
 /**
  * Servlet implementation class EditDefectServlet
@@ -36,6 +37,8 @@ public class EditDefectServlet extends HttpServlet {
 		defect = defectDao.getNewDefect(request);
 		Response updateDefectResp = defectDao.updateDefect(defect);
 		request.getSession().setAttribute("response", updateDefectResp);
+		defect = (Defect) updateDefectResp.getResponseObject();
+		Mail.sendNotification(defect.getAssignedTo()+";" + defect.getIdentifiedBy(), "Defect ID : "+defect.getId(), defect.getDescription());
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("./home.jsp");
 	    requestDispatcher.forward(request, response);
 	}
