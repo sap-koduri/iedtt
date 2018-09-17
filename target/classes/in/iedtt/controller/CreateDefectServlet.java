@@ -26,7 +26,9 @@ public class CreateDefectServlet extends HttpServlet {
 		Response logDefectResponse = defectDao.logDefect(defect);
 		request.setAttribute("response", logDefectResponse);
 		defect = (Defect) logDefectResponse.getResponseObject();
-		Mail.sendNotification(defect.getAssignedTo()+";" + defect.getIdentifiedBy(), "Defect ID : "+defect.getId(), defect.getDescription());
+		String body = "New Defect created under project name : " + defect.getProjectName() + " and Module name is : " + defect.getModuleName();
+		body+="\n Defect details are : " + defect.getDescription();
+		Mail.sendNotification(defect.getAssignedTo()+"," + defect.getIdentifiedBy(), "Defect ID : "+defect.getId(), body);
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("./home.jsp");
 	    requestDispatcher.forward(request, response);
 	}

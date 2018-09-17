@@ -38,7 +38,11 @@ public class EditDefectServlet extends HttpServlet {
 		Response updateDefectResp = defectDao.updateDefect(defect);
 		request.getSession().setAttribute("response", updateDefectResp);
 		defect = (Defect) updateDefectResp.getResponseObject();
-		Mail.sendNotification(defect.getAssignedTo()+";" + defect.getIdentifiedBy(), "Defect ID : "+defect.getId(), defect.getDescription());
+		String body = "Defect id : " + defect.getId() + " was updated,  find below details\n";
+		body+="\n ETA : " + defect.getEta();
+		body+="\n RCA : "+ defect.getRca();
+		body+="\n Status :"+ defect.getStatus();
+		Mail.sendNotification(defect.getAssignedTo()+"," + defect.getIdentifiedBy(), "Defect ID : "+defect.getId(),body);
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("./home.jsp");
 	    requestDispatcher.forward(request, response);
 	}

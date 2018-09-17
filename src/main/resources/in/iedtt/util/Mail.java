@@ -67,7 +67,7 @@ public class Mail extends Thread {
 	
 	public static void main(String[] args) {
 		System.out.println("Mail sending started........................................................");
-		new Mail("reddysoumya563@gmail.com", "Test Mail", "Test mail for defect tracking");
+		sendNotification("reddysoumya563@gmail.com,sap.koduri2@gmail.com", "Test Mail", "Test mail for defect tracking");
 	}
 
 	public void run() {
