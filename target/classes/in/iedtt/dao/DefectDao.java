@@ -5,17 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
-
 import javax.servlet.http.HttpServletRequest;
 
 import in.iedtt.entity.Defect;
@@ -205,6 +198,24 @@ public class DefectDao {
 		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Defect creation response %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 		System.out.println(response);
 		return response;
+	}
+	
+	public HashMap<String, Integer> getDefectsReport(String fromDate, String toDate, String status, String projectName, String moduleName){
+		HashMap<String, Integer> report = new HashMap<String, Integer>();
+		boolean isWhereAdded = false;
+		String query = "SELECT status , COUNT(*) FROM defects GROUP BY status ";
+		if(!fromDate.isEmpty() && !toDate.isEmpty()) {
+			isWhereAdded = true;
+			query += "where defect_date >= " + fromDate + " and defect_date <= " + toDate+" ";
+		}
+		if(!status.isEmpty()) {
+			if(isWhereAdded) {
+				query += "";
+			}
+		}
+		
+		
+		return report;
 	}
 	
 	public static void main(String[] args) {
