@@ -22,6 +22,10 @@ public class NewCommentServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DefectComment comment = new DefectComment();
 		DefectCommentDao commentDao = new DefectCommentDao();
 		String commentor = (request.getSession() !=null)? (String) request.getSession().getAttribute("userId"):"";
@@ -37,10 +41,6 @@ public class NewCommentServlet extends HttpServlet {
 		List<DefectComment> commentsByDefectId = commentDao.getCommentsByDefectId(defectId);
 		request.getSession().setAttribute("commentsByDefectId", commentsByDefectId);
 		request.getRequestDispatcher("./editDefect.jsp").forward(request, response);
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 	}
 
 }

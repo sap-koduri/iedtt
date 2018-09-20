@@ -19,6 +19,10 @@ public class CreateDefectServlet extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Defect creation Requested %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%");
 		Defect defect = new Defect();
 		DefectDao defectDao = new DefectDao();
@@ -31,9 +35,5 @@ public class CreateDefectServlet extends HttpServlet {
 		Mail.sendNotification(defect.getAssignedTo()+"," + defect.getIdentifiedBy(), "Defect ID : "+defect.getId(), body);
 		RequestDispatcher requestDispatcher = request.getRequestDispatcher("./home.jsp");
 	    requestDispatcher.forward(request, response);
-	}
-
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
 	}
 }

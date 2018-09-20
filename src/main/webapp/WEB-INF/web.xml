@@ -82,6 +82,12 @@
   	<description></description>
   	<servlet-class>in.iedtt.controller.ReportsServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>GetDefectStatusServlet</servlet-name>
+  	<display-name>GetDefectStatusServlet</display-name>
+  	<description></description>
+  	<servlet-class>in.iedtt.controller.GetDefectStatusServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
   	<servlet-name>UserRegistrationServlet</servlet-name>
   	<url-pattern>/UserRegistrationServlet</url-pattern>
@@ -133,5 +139,9 @@
   <servlet-mapping>
   	<servlet-name>ReportsServlet</servlet-name>
   	<url-pattern>/ReportsServlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>GetDefectStatusServlet</servlet-name>
+  	<url-pattern>/GetDefectStatusServlet</url-pattern>
   </servlet-mapping>
 </web-app>

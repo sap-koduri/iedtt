@@ -1,3 +1,4 @@
+<%@page import="java.util.HashMap"%>
 <%@page import="in.iedtt.entity.DefectComment"%>
 <%@page import="java.text.SimpleDateFormat"%>
 <%@page import="in.iedtt.entity.Defect"%>
@@ -20,6 +21,7 @@
 	String userId = String.valueOf(request.getSession().getAttribute("userId"));
 	Response findAllUsers = (Response) request.getSession().getAttribute("findAllUsers");
 	Response defectDetails = (Response) request.getSession().getAttribute("response");
+	HashMap<String, UserProfile> userProfilesMap = (HashMap<String, UserProfile>) request.getSession().getAttribute("userProfilesMap");
 	Defect defect = new Defect();
 	List<UserProfile> users = null;
 	String usrNames = "";
@@ -52,7 +54,7 @@ $( document ).ready(function() {
     $("#projectName").val('<%=defect.getProjectName()%>');
     $("#moduleName").val('<%=defect.getModuleName()%>');
     $("#status").val('<%=defect.getStatus()%>');
-    $("#identifiedBy").val('<%=defect.getIdentifiedBy()%>');
+    $("#identifiedBy").val('<%=userProfilesMap.get(defect.getIdentifiedBy()).getFirstName() + " "+userProfilesMap.get(defect.getIdentifiedBy()).getLastName()%>');
     $("#assignedTo").append('<%=usrNames%>');
     $("#assignedTo").val('<%=defect.getAssignedTo()!= null ?defect.getAssignedTo():""%>');
     $("#defectDate").val('<%=defect.getDefectDate()!= null ?defect.getDefectDate():""%>');
@@ -178,7 +180,7 @@ $("#status").change(function(){
      	<table style="width: 969px;">
      	<% for(DefectComment defectComment : commentsByDefectId){ %>
 			<tr>
-				<td style="width:100px;"><label style="color: blue;"><%= defectComment.getCommentor()%></label></td>
+				<td style="width:100px;"><label style="color: blue;"><%= userProfilesMap.get(defectComment.getCommentor()).getFirstName() + " "+userProfilesMap.get(defectComment.getCommentor()).getLastName()%></label></td>
 				<td style="width:600px;"><label style="color: black;"><%= defectComment.getComment()%></label></td>
 				<td style="width:100px;"><label style="color: gray;"><%= defectComment.getDate()%></label></td>
 			</tr>

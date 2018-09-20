@@ -38,7 +38,7 @@ public class Mail extends Thread {
         //Establishing a session with required user details
         Session session = Session.getInstance(props, new javax.mail.Authenticator() {
             protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication("reddysoumya563@gmail.com", "S@ibaba123");
+                return new PasswordAuthentication("reddysoumya563@gmail.com", "Surilucky34");
             }
         });
         try {

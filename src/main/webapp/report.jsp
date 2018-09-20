@@ -1,4 +1,16 @@
+<%@page import="in.iedtt.entity.UserProfile"%>
+<%@page import="in.iedtt.entity.Project"%>
+<%@page import="java.util.List"%>
 <%@page import="in.iedtt.entity.Response"%>
+<%
+	List<Project> projects = (List<Project>) request.getSession().getAttribute("projects");
+	String prjcts = "<option value=\"select\">Select</option>";
+	if(projects !=null){
+		for(int i=0;i<projects.size();i++){
+			prjcts+="<option value=\""+projects.get(i).getProjectName()+"\">"+projects.get(i).getProjectName()+"</option>";
+    	}
+	}
+%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <title>Online Defect Tracking System</title>
@@ -11,30 +23,49 @@
 <link rel="stylesheet" href="layout/styles/layout.css" type="text/css" />
 <script src="js/jquery.1.9.1.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"> </script>
 <script type="text/javascript">
-	// Load google charts
-	google.charts.load('current', {'packages':['corechart']});
-	google.charts.setOnLoadCallback(drawChart);
-	
-	// Draw the chart and set the chart values
-	function drawChart() {
-	  var data = google.visualization.arrayToDataTable([
-	  ['Defect Status', 'Number of Defects'],
-	  ['New', 10],
-	  ['Open',15],
-	  ['Fixed',20],
-	  ['Re Test',25],
-	  ['Closed', 30]
-	]);
-	
-	  // Optional; add a title and set the width and height of the chart
-	  var options = {'title':'Defects Report', 'width':550, 'height':400};
-	
-	  // Display the chart inside the <div> element with id="piechart"
-	  var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-	  chart.draw(data, options);
+
+$( document ).ready(function() {
+	$("#projectName").empty();
+    $("#projectName").append('<%=prjcts%>');
+});
+</script>
+<script type="text/javascript">
+function loadChat() {
+
+	var chart = new CanvasJS.Chart("chartContainer", {
+		theme: "light1", // "light2", "dark1", "dark2"
+		animationEnabled: true, // change to true		
+		title:{
+			text: "Basic Column Chart"
+		},
+		data: [
+		{
+			// Change type to "bar", "area", "spline", "pie",etc.
+			type: "column",
+			dataPoints: [
+				{ label: "New",  y: 10  },
+				{ label: "Open", y: 15  },
+				{ label: "Fixed", y: 25  },
+				{ label: "Re Test",  y: 30  },
+				{ label: "Closed",  y: 28  }
+			]
+		}
+		]
+	});
+	chart.render();
+
 	}
 </script>
+
+<script type="text/javascript">
+	// Load google charts
+// 	google.charts.load('current', {'packages':['corechart']});
+// 	google.charts.setOnLoadCallback(drawChart);
+
+</script>
+
 </head>
 <body id="top">
 <div class="wrapper col1">
@@ -61,55 +92,51 @@
 					<div id="regDiv">
 						<h3>Report</h3>
 						<div>
-						<form action="">
-						<table>
-							<tr>
-								<td> <label class="rightCell">From Date</label> </td>
-								<td> <label class="rightCell">To Date</label> </td>
-								<td> <label class="rightCell">Status</label> </td>
-								<td> <label class="rightCell">Project</label> </td>
-								<td> <label class="rightCell">Module</label> </td>
-								<td> <label class="rightCell"></label> </td>
-							</tr>
-							<tr>
-								<td>
-									<input type="date" id="fromDate" name="fromDate" placeholder="from date"  class="rightCell"></input>
-								</td>
-								<td>
-									<input type="date" id="toDate" name="toDate" placeholder="to date"  class="rightCell"></input>
-								</td>
-								<td>
-									<select id="status" name="status" required="required" class="rightCell"  class="rightCell">
+							<table>
+								<tr>
+									<td> <label class="rightCell">From Date</label> </td>
+									<td> <label class="rightCell">To Date</label> </td>
+									<td> <label class="rightCell">Status</label> </td>
+									<td> <label class="rightCell">Project</label> </td>
+									<td> <label class="rightCell">Module</label> </td>
+									<td> <label class="rightCell"></label> </td>
+								</tr>
+								<tr>
+									<td>
+										<input type="date" id="fromDate" name="fromDate" placeholder="from date" class="rightCell"></input>
+									</td>
+									<td>
+										<input type="date" id="toDate" name="toDate" placeholder="to date" class="rightCell"></input>
+									</td>
+									<td>
+										<select id="status" name="status" class="rightCell"  class="rightCell">
+											<option value="">Select</option>
+											<option value="New">New</option>
+											<option value="Open">Open</option>
+											<option value="Fixed">Fixed</option>
+											<option value="ReTest">Re Test</option>
+											<option value="Closed">Close</option>
+										</select>
+									</td>
+									<td>
+										<select id="projectName" name="projectName" class="rightCell">
 										<option value="">Select</option>
-										<option value="New">New</option>
-										<option value="Open">Open</option>
-										<option value="Fixed">Fixed</option>
-										<option value="ReTest">Re Test</option>
-										<option value="Closed">Close</option>
-									</select>
-								</td>
-								<td>
-									<select id="projectName" name="projectName" required="required" class="rightCell">
-									<option value="">Select</option>
-									</select>
-								</td>
-								<td>
-									<select id="moduleName" name="moduleName" required="required" class="rightCell">
-									<option value="">Select</option>
-									</select>
-								</td>
-								<td>
-									<input type="submit" value="Get Report"  class="rightCell"></input>
-								</td>
-							</tr>
-						</table>
-						</form>
+										</select>
+									</td>
+									<td>
+										<select id="moduleName" name="moduleName" class="rightCell">
+										<option value="">Select</option>
+										</select>
+									</td>
+									<td>
+										<input type="button" id="getReport" name="getReport"  value="Get Report" class="rightCell" onclick="javascript:getReport();"></input>
+									</td>
+								</tr>
+							</table>
 						</div>
 						<div>
 							<section>
-								<div id="piechart">
-									
-								</div>
+								<div id="chartContainer" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
 							</section>
 						</div>
 					</div>
@@ -134,5 +161,62 @@
     <br class="clear" />
   </div>
 </div>
+<script type="text/javascript">
+
+$("#projectName").change(function(){
+      $.post("./GetProjectModulesServlet",
+    	  	{
+    	  		projectName: this.value
+    	    },
+    	        function(data,status){
+    	    	if(status == "success")
+    	    	$("#moduleName").empty();
+    	            console.log("Data: " + data + "\nStatus: " + status);
+    	    	  $("#moduleName").append(data);
+    	        });
+});
+
+</script>
+<script type="text/javascript">
+	function getReport() {
+		
+		var fromDate = $("#fromDate").val();
+		var toDate = $("#toDate").val();
+		var status=$("#status").val();
+		var projectName=$("#projectName").val();
+		var moduleName=$("#moduleName").val();
+		alert(fromDate + toDate +  status + projectName + moduleName);
+		$.post("./GetDefectStatusServlet",
+	    	  	{
+					fromDate: fromDate,
+					toDate:toDate,
+					status:status,
+					projectName:projectName,
+					moduleName:moduleName
+	    	  		
+	    	    },
+	    	        function(data,status){
+		    	    	if(status == "success"){
+		    	    		loadChat();
+		    	            console.log("Data: " + data + "\nStatus: " + status);
+		    	    		var counts = data.split(";");
+		    	    			  var data = google.visualization.arrayToDataTable([
+		    	    				  ['Defect Status', 'Number of Defects'],
+		    	    				  ['New', counts[0].split(":")[1]],
+		    	    				  ['Open', counts[1].split(":")[1]],
+		    	    				  ['Fixed', counts[2].split(":")[1]],
+		    	    				  ['Re Test',counts[3].split(":")[1]],
+		    	    				  ['Closed', counts[4].split(":")[1]]
+		    	    				]);
+		    	    				
+		    	    		}
+		    	    	}
+	    	        );
+	}
+
+	
+
+	
+</script>
 </body>
 </html>

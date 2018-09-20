@@ -203,18 +203,67 @@ public class DefectDao {
 	public HashMap<String, Integer> getDefectsReport(String fromDate, String toDate, String status, String projectName, String moduleName){
 		HashMap<String, Integer> report = new HashMap<String, Integer>();
 		boolean isWhereAdded = false;
-		String query = "SELECT status , COUNT(*) FROM defects GROUP BY status ";
-		if(!fromDate.isEmpty() && !toDate.isEmpty()) {
-			isWhereAdded = true;
-			query += "where defect_date >= " + fromDate + " and defect_date <= " + toDate+" ";
-		}
-		if(!status.isEmpty()) {
+		String query = "SELECT status , COUNT(*) FROM defects";
+		if(fromDate != null && !fromDate.isEmpty()) {
+			String fromDateCondition = "defect_date >= '" + fromDate+"'" ;
 			if(isWhereAdded) {
-				query += "";
+				query += " AND " + fromDateCondition;
+			}else {
+				query+= " WHERE " + fromDateCondition;
+				isWhereAdded = true;
 			}
 		}
 		
+		if(toDate != null && !toDate.isEmpty()) {
+			String toDateCondition = "defect_date <= '" + toDate+"'" ;
+			if(isWhereAdded) {
+				query += " AND " + toDateCondition;
+			}else {
+				query+= " WHERE " + toDateCondition;
+				isWhereAdded = true;
+			}
+		}
 		
+		if(status != null && !status.isEmpty()) {
+			String statusCondition = " status = '" +status + "'"; 
+			if(isWhereAdded) {
+				query +=" AND " + statusCondition;
+			}else {
+				query +=" WHERE "+statusCondition;
+				isWhereAdded = true;
+			}
+		}
+
+		if(projectName != null && !projectName.isEmpty()) {
+			String projectNameCondition = " project_name = '" +projectName + "'"; 
+			if(isWhereAdded) {
+				query +=" AND " + projectNameCondition;
+			}else {
+				query += " WHERE "+projectNameCondition;
+				isWhereAdded = true;
+			}
+		}
+		
+		if(moduleName != null && !moduleName.isEmpty()) {
+			String moduleNameCondition = " module_name = '" +moduleName + "'"; 
+			if(isWhereAdded) {
+				query +=" AND " + moduleNameCondition;
+			}else {
+				query += " WHERE "+moduleNameCondition;
+				isWhereAdded = true;
+			}
+		}
+		
+		query+=" GROUP BY status"; 
+		ResultSet data = DBUtil.getData(query);
+		try {
+			while(data != null && data.next()) {
+				report.put(data.getString(1), data.getInt(2));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		System.out.println("Defects report response is :::::::::::::::::::::::::::::::::::::::::::: \n"+report);
 		return report;
 	}
 	
