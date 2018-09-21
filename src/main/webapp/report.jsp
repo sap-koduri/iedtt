@@ -4,7 +4,7 @@
 <%@page import="in.iedtt.entity.Response"%>
 <%
 	List<Project> projects = (List<Project>) request.getSession().getAttribute("projects");
-	String prjcts = "<option value=\"select\">Select</option>";
+	String prjcts = "<option value=\"\">Select</option>";
 	if(projects !=null){
 		for(int i=0;i<projects.size();i++){
 			prjcts+="<option value=\""+projects.get(i).getProjectName()+"\">"+projects.get(i).getProjectName()+"</option>";
@@ -23,46 +23,83 @@
 <link rel="stylesheet" href="layout/styles/layout.css" type="text/css" />
 <script src="js/jquery.1.9.1.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"> </script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+<script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script> 
 <script type="text/javascript">
+window.onload = function () {
+	var newCount = 1;
+	var openCount = 2;
+	var fixedCount = 3;
+	var reTestCount = 4;
+	var closedCount =  5;
+	var chart = new CanvasJS.Chart("chartContainer", { 
+		title: {
+			text: "Reports"
+		},
+		data: [
+		{
+			type: "column",
+			dataPoints: [
+              { label: "New", y: newCount },
+				{ label: "opened",y:  openCount },
+				{ label: "Fixed",y: fixedCount },
+				{ label: "ReTest",y:  reTestCount },
+				{ label: "closed",y:  closedCount }	
+			]
+		}
+		]
+	});
+	chart.render();	
+	$("#getReport").click(function () {
+	var length = chart.options.data[0].dataPoints.length;
+	chart.options.title.text = "Reports Based on Search Criteria";
+	var fromDate = $("#fromDate").val();
+	var toDate = $("#toDate").val();
+	var status=$("#status").val();
+	var projectName=$("#projectName").val();
+	var moduleName=$("#moduleName").val();
 
+	$.post("./GetDefectStatusServlet",
+    	  	{
+				fromDate: fromDate,
+				toDate:toDate,
+				status:status,
+				projectName:projectName,
+				moduleName:moduleName
+    	  		
+    	    },
+    	        function(data,status){
+	    	    	if(status == "success"){
+	    	            console.log(data);
+	    	    		 var counts = data.split(";");
+	    	    		 newCount = counts[0].split(":")[1];
+	    	    		 openCount = counts[1].split(":")[1];
+	    	    		 fixedCount = counts[2].split(":")[1];
+	    	    		 reTestCount = counts[3].split(":")[1];
+	    	    		 closedCount = counts[4].split(":")[1];
+	    	    		 
+	    	    		}
+	    	    	});
+	setTimeout(function(){
+		console.log("newCount: " + newCount + "\n openCount: " + openCount+"\n fixedCount: " + fixedCount + "\n reTestCount: " + reTestCount+ "\n closedCount: " + closedCount);
+		chart.options.data[0].dataPoints[0].y = parseInt(newCount,10);
+		chart.options.data[0].dataPoints[1].y =  parseInt(openCount,10);
+		chart.options.data[0].dataPoints[2].y =  parseInt(fixedCount,10);
+		chart.options.data[0].dataPoints[3].y =  parseInt(reTestCount,10);
+		chart.options.data[0].dataPoints[4].y =  parseInt(closedCount,10);
+		chart.render();
+	},100);
+	chart.render();
+	});
+}
 $( document ).ready(function() {
 	$("#projectName").empty();
     $("#projectName").append('<%=prjcts%>');
 });
 </script>
-<script type="text/javascript">
-function loadChat() {
-
-	var chart = new CanvasJS.Chart("chartContainer", {
-		theme: "light1", // "light2", "dark1", "dark2"
-		animationEnabled: true, // change to true		
-		title:{
-			text: "Basic Column Chart"
-		},
-		data: [
-		{
-			// Change type to "bar", "area", "spline", "pie",etc.
-			type: "column",
-			dataPoints: [
-				{ label: "New",  y: 10  },
-				{ label: "Open", y: 15  },
-				{ label: "Fixed", y: 25  },
-				{ label: "Re Test",  y: 30  },
-				{ label: "Closed",  y: 28  }
-			]
-		}
-		]
-	});
-	chart.render();
-
-	}
-</script>
 
 <script type="text/javascript">
 	// Load google charts
-// 	google.charts.load('current', {'packages':['corechart']});
-// 	google.charts.setOnLoadCallback(drawChart);
 
 </script>
 
@@ -180,43 +217,9 @@ $("#projectName").change(function(){
 <script type="text/javascript">
 	function getReport() {
 		
-		var fromDate = $("#fromDate").val();
-		var toDate = $("#toDate").val();
-		var status=$("#status").val();
-		var projectName=$("#projectName").val();
-		var moduleName=$("#moduleName").val();
-		alert(fromDate + toDate +  status + projectName + moduleName);
-		$.post("./GetDefectStatusServlet",
-	    	  	{
-					fromDate: fromDate,
-					toDate:toDate,
-					status:status,
-					projectName:projectName,
-					moduleName:moduleName
-	    	  		
-	    	    },
-	    	        function(data,status){
-		    	    	if(status == "success"){
-		    	    		loadChat();
-		    	            console.log("Data: " + data + "\nStatus: " + status);
-		    	    		var counts = data.split(";");
-		    	    			  var data = google.visualization.arrayToDataTable([
-		    	    				  ['Defect Status', 'Number of Defects'],
-		    	    				  ['New', counts[0].split(":")[1]],
-		    	    				  ['Open', counts[1].split(":")[1]],
-		    	    				  ['Fixed', counts[2].split(":")[1]],
-		    	    				  ['Re Test',counts[3].split(":")[1]],
-		    	    				  ['Closed', counts[4].split(":")[1]]
-		    	    				]);
-		    	    				
-		    	    		}
-		    	    	}
-	    	        );
+		
+
 	}
-
-	
-
-	
 </script>
 </body>
 </html>

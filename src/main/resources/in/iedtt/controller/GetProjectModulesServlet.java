@@ -32,7 +32,7 @@ public class GetProjectModulesServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		ProjectDao projectDao = new ProjectDao();
-		String projectModules = "<option value=\"select\">Select</option>";
+		String projectModules = "<option value=\"\">Select</option>";
 		String projectName = (String) request.getParameter("projectName");
 		List<Project> modules = projectDao.getAllModulesByProjectName(projectName);
 		if(modules!=null) {
