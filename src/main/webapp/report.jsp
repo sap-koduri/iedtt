@@ -27,11 +27,11 @@
 <script type="text/javascript" src="https://canvasjs.com/assets/script/canvasjs.min.js"></script> 
 <script type="text/javascript">
 window.onload = function () {
-	var newCount = 1;
-	var openCount = 2;
-	var fixedCount = 3;
-	var reTestCount = 4;
-	var closedCount =  5;
+	var newCount = 0;
+	var openCount = 0;
+	var fixedCount = 0;
+	var reTestCount = 0;
+	var closedCount =  0;
 	var chart = new CanvasJS.Chart("chartContainer", { 
 		title: {
 			text: "Reports"

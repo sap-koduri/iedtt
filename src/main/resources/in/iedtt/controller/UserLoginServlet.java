@@ -32,12 +32,16 @@ public class UserLoginServlet extends HttpServlet {
 		Response loginResponse = userDao.findUserByEmailIdAndPassword(user);
 		System.out.println(loginResponse);
 		request.setAttribute("response", loginResponse);
+		boolean isLocalRequest = (request.getRemoteAddr().equalsIgnoreCase(request.getLocalAddr()))?true:false;
+		request.getSession().setAttribute("isLocalRequest", isLocalRequest);
 		if(!loginResponse.getStatus().equalsIgnoreCase("Success")) {
 			RequestDispatcher requestDispatcher = request.getRequestDispatcher("./index.jsp");
 	        requestDispatcher.forward(request, response);
 		}else {
 			String userId = ((User)loginResponse.getResponseObject()).getEmailId();
 			request.getSession().setAttribute("userId", userId);
+			String userType = ((User)loginResponse.getResponseObject()).getRole();
+			request.getSession().setAttribute("userType", userType);
 			Response findAllUsers = userDao.findAllUsers();
 			request.getSession().setAttribute("findAllUsers", findAllUsers);
 			ProjectDao projectDao = new ProjectDao();

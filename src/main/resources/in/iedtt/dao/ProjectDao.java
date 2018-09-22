@@ -28,12 +28,11 @@ public class ProjectDao {
 			pstmt.setString(2, project.getProjectDescription());
 			pstmt.setString(3, project.getModule());
 			System.out.println("*********************************************  new Project Query ***************************************************************");
-			
+			System.err.println(pstmt.toString());
 			int resp = pstmt.executeUpdate();
 			if(resp!=0) {
 				response.setStatus("Success");
-				int projectId= rs.getInt(1);
-				response.setStatusMessage("Project added Successfully\n project id : "+projectId);
+				response.setStatusMessage("Project added Successfully");
 				response.setResponseObject(project);
 			}else {
 				response.setStatus("Fail");

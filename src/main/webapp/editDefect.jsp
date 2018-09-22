@@ -4,6 +4,7 @@
 <%@page import="in.iedtt.entity.Defect"%>
 <%@page import="in.iedtt.entity.UserProfile"%>
 <%@page import="java.util.List"%>
+<%@page import="in.iedtt.util.UserRoles"%>
 <%@page import="in.iedtt.entity.Response"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
@@ -23,6 +24,8 @@
 	Response defectDetails = (Response) request.getSession().getAttribute("response");
 	HashMap<String, UserProfile> userProfilesMap = (HashMap<String, UserProfile>) request.getSession().getAttribute("userProfilesMap");
 	Defect defect = new Defect();
+	String userType = (String) request.getSession().getAttribute("userType");
+	Boolean isLocalRequest = (Boolean) request.getSession().getAttribute("isLocalRequest");
 	List<UserProfile> users = null;
 	String usrNames = "";
 	if(findAllUsers !=null){
@@ -54,7 +57,8 @@ $( document ).ready(function() {
     $("#projectName").val('<%=defect.getProjectName()%>');
     $("#moduleName").val('<%=defect.getModuleName()%>');
     $("#status").val('<%=defect.getStatus()%>');
-    $("#identifiedBy").val('<%=userProfilesMap.get(defect.getIdentifiedBy()).getFirstName() + " "+userProfilesMap.get(defect.getIdentifiedBy()).getLastName()%>');
+    $("#identifiedByName").val('<%=userProfilesMap.get(defect.getIdentifiedBy()).getFirstName() + " "+userProfilesMap.get(defect.getIdentifiedBy()).getLastName()%>');
+    $("#identifiedBy").val('<%=defect.getIdentifiedBy()%>');
     $("#assignedTo").append('<%=usrNames%>');
     $("#assignedTo").val('<%=defect.getAssignedTo()!= null ?defect.getAssignedTo():""%>');
     $("#defectDate").val('<%=defect.getDefectDate()!= null ?defect.getDefectDate():""%>');
@@ -82,8 +86,12 @@ $("#status").change(function(){
       <p>ODTS</p>
     </div>
     <ul id="topnav">
-     <li><a href="./newDefect">Defect</a></li>
-      <li><a href="./adminPanel.jsp">Admin Page</a></li>
+	     <% if(isLocalRequest.booleanValue() == true) {%>
+			<li><a href="./newDefect">Defect</a></li>
+		<%} %>
+       <% if(UserRoles.MANAGER.equalsIgnoreCase(userType) || UserRoles.SCRUM_MASTER.equalsIgnoreCase(userType)) {%>
+      	<li><a href="./adminPanel.jsp">Admin Page</a></li>
+      <%} %>
     </ul>
     <br class="clear"/>
   </div>
@@ -125,8 +133,11 @@ $("#status").change(function(){
 														<option value="Closed">Close</option>
 												</select></td>
 												<td>identifiedBy</td>
-												<td><input type="email" name="identifiedBy" id="identifiedBy"
-													value="" required="required" class="rightCell" readonly="readonly" /></td>
+												<td><input type="text" name="identifiedByName" id="identifiedByName"
+													value="" required="required" class="rightCell" readonly="readonly" />
+													<input type="hidden" name="identifiedBy" id="identifiedBy"
+													value="" required="required" class="rightCell" readonly="readonly" />
+												</td>
 											</tr>
 											<tr>
 												<td>assignedTo</td>
@@ -156,6 +167,7 @@ $("#status").change(function(){
 									</form>
 								<form action="./NewCommentServlet" method="post">
 									<input type="hidden" id="defectId" name="defectId" value="<%=defect.getId()%>"/>
+									<input type="hidden" id="identifiedBy_comment" name="identifiedBy_comment" value="<%=defect.getIdentifiedBy()%>"/>
 									<table>
 										<tr>
 											<td>Comment</td>

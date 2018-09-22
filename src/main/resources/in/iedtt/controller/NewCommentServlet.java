@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import in.iedtt.dao.DefectCommentDao;
 import in.iedtt.entity.DefectComment;
 import in.iedtt.entity.Response;
+import in.iedtt.util.Mail;
 
 public class NewCommentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -38,6 +39,8 @@ public class NewCommentServlet extends HttpServlet {
 		comment.setDate(new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 		Response logCommentResponse = commentDao.logComment(comment);
 		request.setAttribute("logCommentResponse", logCommentResponse);
+		String identifiedBy = (String)request.getParameter("identifiedBy_comment");
+		Mail.sendNotification(comment.getCommentor()+"," + identifiedBy, "Comment added to Defect ID : "+comment.getDefectId(),comment.getComment());
 		List<DefectComment> commentsByDefectId = commentDao.getCommentsByDefectId(defectId);
 		request.getSession().setAttribute("commentsByDefectId", commentsByDefectId);
 		request.getRequestDispatcher("./editDefect.jsp").forward(request, response);

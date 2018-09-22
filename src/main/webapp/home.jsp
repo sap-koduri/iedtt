@@ -1,3 +1,4 @@
+<%@page import="in.iedtt.util.UserRoles"%>
 <%@page import="in.iedtt.entity.Response"%>
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -14,7 +15,8 @@
 		status = resp.getStatus();
 		statusMessage = resp.getStatusMessage();
 	}
-	
+	String userType = (String) request.getSession().getAttribute("userType");
+	Boolean isLocalRequest = (Boolean) request.getSession().getAttribute("isLocalRequest");
 %>
 <script type="text/javascript">
 $(document).ready(function() {
@@ -44,8 +46,12 @@ $(document).ready(function() {
       <p>ODTS</p>
     </div>
     <ul id="topnav">
+    <% if(isLocalRequest.booleanValue() == true) {%>
      <li><a href="./newDefect">Defect</a></li>
-      <li><a href="./adminPanel.jsp">Admin Page</a></li>
+     <%} %>
+     <% if(UserRoles.MANAGER.equalsIgnoreCase(userType) || UserRoles.SCRUM_MASTER.equalsIgnoreCase(userType)) {%>
+      	<li><a href="./adminPanel.jsp">Admin Page</a></li>
+      <%} %>
     </ul>
     <br class="clear"/>
   </div>

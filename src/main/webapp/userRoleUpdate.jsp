@@ -38,7 +38,7 @@ $( document ).ready(function() {
 <div class="wrapper col2">
   <div id="header">
     <div class="fl_left">
-      <h1><a href="#">Online Defect Tracking System</a></h1>
+     <h1><a href="home.jsp">Online Defect Tracking System</a></h1>
       <p>ODTS</p>
     </div>
     <ul id="topnav">

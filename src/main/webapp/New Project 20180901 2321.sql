@@ -62,7 +62,7 @@ CREATE TABLE `defect_comments` (
   KEY `FK_defect_user` (`commentor`),
   CONSTRAINT `FK_defect_id` FOREIGN KEY (`defect_id`) REFERENCES `defects` (`id`),
   CONSTRAINT `FK_defect_user` FOREIGN KEY (`commentor`) REFERENCES `user` (`email_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `defect_comments`
@@ -92,7 +92,15 @@ INSERT INTO `defect_comments` (`defect_id`,`commentor`,`comment`,`date_time`) VA
  (17,'sap.koduri@gmail.com','ASDAdsASDasd','2018-09-16 15:07:20'),
  (17,'sap.koduri@gmail.com','ASDAdsASDasd','2018-09-16 15:07:36'),
  (17,'sap.koduri@gmail.com','ASDAdsASDasd','2018-09-16 15:08:11'),
- (17,'sap.koduri@gmail.com','ASDAdsASDasd','2018-09-16 15:08:29');
+ (17,'sap.koduri@gmail.com','ASDAdsASDasd','2018-09-16 15:08:29'),
+ (17,'sap.koduri@gmail.com','difect not fixed properly, re opened','2018-09-16 16:25:58'),
+ (19,'sap.koduri2@gmail.com','new defect','2018-09-19 20:52:13'),
+ (19,'sap.koduri2@gmail.com','new defect','2018-09-19 20:53:22'),
+ (19,'sap.koduri2@gmail.com','new defect','2018-09-19 20:53:36'),
+ (19,'sap.koduri2@gmail.com','new defect','2018-09-19 21:01:50'),
+ (20,'sap.koduri2@gmail.com','defect opened and started investigation on issue','2018-09-22 17:20:15'),
+ (17,'sap.koduri@gmail.com','The quick brown fox jumps over the lazy dog\r\nThe quick brown fox jumps over the lazy dog\r\nThe quick brown fox jumps over the lazy dog\r\nThe quick brown fox jumps over the lazy dog\r\nThe quick brown fox jumps over the lazy dog\r\nThe quick brown fox jumps over the lazy dog\r\nThe quick brown fox jumps over the lazy dog\r\nThe quick brown fox jumps over the lazy dog','2018-09-22 17:41:18'),
+ (17,'sap.koduri@gmail.com','dfasdfasdfasdfasdf','2018-09-22 17:50:39');
 /*!40000 ALTER TABLE `defect_comments` ENABLE KEYS */;
 
 
@@ -113,7 +121,7 @@ CREATE TABLE `defects` (
   `project_name` varchar(100) NOT NULL,
   `module_name` varchar(100) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `defects`
@@ -121,7 +129,10 @@ CREATE TABLE `defects` (
 
 /*!40000 ALTER TABLE `defects` DISABLE KEYS */;
 INSERT INTO `defects` (`id`,`description`,`status`,`identified_by`,`assigned_to`,`eta`,`defect_date`,`rca`,`project_name`,`module_name`) VALUES 
- (17,'new defect','Closed','sap.koduri@gmail.com','sap.koduri@yahoo.com','2018-09-20','2018-09-11','null pointer not handled','IEDTT','login');
+ (17,'new defect','Closed','sap.koduri@gmail.com','sap.koduri@yahoo.com','2018-09-20','2018-09-11','null pointer not handled','IEDTT','login'),
+ (18,'new project iedtt','Fixed','sap.koduri2@gmail.com','Reddysoumya563@gmail.com','2018-09-21','2018-09-18','','IEDTT','login'),
+ (19,'WEQEWR','ReTest','sap.koduri2@gmail.com','Reddysoumya563@gmail.com','2018-09-24','2018-09-18','','IEDTT','login'),
+ (20,'Registration issue','Fixed','sap.koduri2@gmail.com','sap.koduri@gmail.com','2018-09-26','2018-09-22','Validation error','ALM','Registration');
 /*!40000 ALTER TABLE `defects` ENABLE KEYS */;
 
 
@@ -143,7 +154,11 @@ CREATE TABLE `project` (
 
 /*!40000 ALTER TABLE `project` DISABLE KEYS */;
 INSERT INTO `project` (`project_name`,`description`,`module_name`) VALUES 
- ('IEDTT','new project iedtt','login');
+ ('IEDTT','internal and external defect tracking system','Defect Creation'),
+ ('IEDTT','new project iedtt','login'),
+ ('ALM','Internal defect tracking tool','Registration'),
+ ('IEDTT','internal and external defect tracking system','Registration'),
+ ('ALM','Internal defect tracking tool','Reports');
 /*!40000 ALTER TABLE `project` ENABLE KEYS */;
 
 
@@ -189,6 +204,8 @@ CREATE TABLE `user` (
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
 INSERT INTO `user` (`email_id`,`password`,`date_of_registration`,`last_login`,`is_user_active`,`role`,`team`) VALUES 
  ('emai@gmail.com','password','2018-08-19 15:29:33','2018-08-19 15:29:33',1,'',0),
+ ('Reddysoumya563@gmail.com','password','2018-09-18 01:32:56','2018-09-18 01:32:56',1,'new',0),
+ ('sap.koduri2@gmail.com','password','2018-09-18 01:32:02','2018-09-18 01:32:02',1,'manager',0),
  ('sap.koduri@gmail.com','password','2018-08-19 19:27:03','2018-08-19 19:27:03',1,'dev',0),
  ('sap.koduri@yahoo.com','password','2018-08-28 22:36:17','2018-08-28 22:36:17',1,'new',0);
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
@@ -221,6 +238,8 @@ CREATE TABLE `user_profile` (
 /*!40000 ALTER TABLE `user_profile` DISABLE KEYS */;
 INSERT INTO `user_profile` (`email_id`,`first_name`,`last_name`,`gender`,`mobile`,`security_question_1`,`security_answer_1`,`security_question_2`,`sucrity_answer_2`,`is_user_profile_active`) VALUES 
  ('emai@gmail.com','first name','last name','Female','1234567890','Where Your Born','india','Favourite colour','blue',1),
+ ('Reddysoumya563@gmail.com','sowmya','Reddy','Female','1234512345','First Mobile Number','1234567890','Mother Middle Name','Reddy',1),
+ ('sap.koduri2@gmail.com','sap','k','Male','1231231231','First Mobile Number','1234567890','Mother Middle Name','ss',1),
  ('sap.koduri@gmail.com','fn','ln','Female','9876543210','First School Name','shankar','Favourite colour','blue',1),
  ('sap.koduri@yahoo.com','ss','ss','Male','1324567890','First Mobile Number','1234567890','Best Friend Name','ss',1);
 /*!40000 ALTER TABLE `user_profile` ENABLE KEYS */;
