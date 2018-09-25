@@ -19,11 +19,9 @@ import in.iedtt.entity.UserProfile;
 
 public class UserLoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
     public UserLoginServlet() {
         super();
     }
-
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("################################################# User Login called ########################################");
 		System.out.println("Network address : Remote -> " + request.getRemoteAddr()  + " Local -> :  "+request.getLocalAddr());

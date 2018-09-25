@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,13 +31,23 @@ public class DefectDao {
 			pstmt.setString(1, defect.getDescription());
 			pstmt.setString(2, defect.getIdentifiedBy());
 			pstmt.setString(3, defect.getAssignedTo());
-			pstmt.setString(4, defect.getDefectDate());
+			try {
+				pstmt.setString(4, new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse(defect.getDefectDate())));
+			} catch (ParseException e1) {
+				e1.printStackTrace();
+				pstmt.setString(4,null);
+			}
 			pstmt.setString(5, defect.getStatus());
 			pstmt.setString(6, defect.getRca());
 			if(defect.getEta() == null) {
 				pstmt.setString(7,null);
 			}else {
-				pstmt.setString(7,new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(defect.getEta()));
+				try {
+					pstmt.setString(7,new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse(defect.getEta())));
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+				
 			}
 			pstmt.setString(8, defect.getProjectName());
 			pstmt.setString(9, defect.getModuleName());
@@ -173,7 +184,12 @@ public class DefectDao {
 			if(defect.getEta() == null) {
 				pstmt.setString(4,null);
 			}else {
-				pstmt.setString(4,defect.getEta());
+				try {
+					pstmt.setString(4, new SimpleDateFormat("yyyy-MM-dd").format(new SimpleDateFormat("MM/dd/yyyy").parse(defect.getEta())));
+				} catch (ParseException e) {
+					pstmt.setString(4, null);
+					e.printStackTrace();
+				}
 			}
 			pstmt.setInt(5, defect.getId());
 			System.err.println("Prepared Statement for updateDefect after bind variables set:\n\t" + pstmt.toString());

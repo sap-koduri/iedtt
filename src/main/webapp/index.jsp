@@ -5,6 +5,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link rel="stylesheet" href="layout/styles/layout.css" type="text/css" />
 <script src="js/jquery.1.9.1.min.js"></script>
+<style type="text/css">
+.rightCell{
+	width: 200px;
+}
+</style>
 <%
 	Response resp = (Response)request.getAttribute("response");
 	String status = null;
@@ -74,18 +79,18 @@ $( document ).ready(function() {
 										<table>
 											<tr>
 												<td>Email</td>
-												<td><input type="email" name="loginId" id="loginId" value="" required="required"/></td>
+												<td><input type="email" name="loginId" id="loginId" value="" required="required"  class="rightCell"/></td>
 											</tr>
 											<tr>
 											<td>Password</td>
-											<td><input type="password" name="pwd" id="pwd" value="" required="required"/></td>
+											<td><input type="password" name="pwd" id="pwd" value="" required="required"  class="rightCell"/></td>
 											</tr>
 											<tr>
 											<td>
 												
 											</td>
 											<td>
-												<input type="submit" value="Login" />
+												<input type="submit" value="Login"  class="rightCell"/>
 											</td>
 											</tr>
 										</table>
@@ -109,7 +114,7 @@ $( document ).ready(function() {
 													<label for="First Name">First Name</label>
 												</td>
 												<td>
-													<input type="text" name="firstName" id="firstName" required="required"/>
+													<input type="text" name="firstName" id="firstName" required="required" class="rightCell"/>
 												</td>
 											</tr>
 											<tr>
@@ -117,7 +122,7 @@ $( document ).ready(function() {
 													<label for="Last Name">Last Name</label>
 												</td>
 												<td>
-													<input type="text" name="lastName" id="lastName" required="required"/>
+													<input type="text" name="lastName" id="lastName" required="required" class="rightCell"/>
 												</td>
 											</tr>
 											<tr>
@@ -125,7 +130,7 @@ $( document ).ready(function() {
 													<label for="gender">Gender</label>
 												</td>
 												<td>
-													<select name="gender" id="gender" style="width:173px;">
+													<select name="gender" id="gender" class="rightCell">
 														<option name="male" id="male">Male</option>
 														<option name="female" id="female">Female</option>
 													</select>
@@ -136,7 +141,7 @@ $( document ).ready(function() {
 													<label for="mobile">Mobile</label>
 												</td>
 												<td>
-													<input type="number" name="mobile" id="mobile" required="required"/>
+													<input type="number" name="mobile" id="mobile" required="required"  class="rightCell"/>
 												</td>
 											</tr>
 											<tr>
@@ -144,7 +149,7 @@ $( document ).ready(function() {
 													<label for="email">Email</label>
 												</td>
 												<td>
-													<input type="email" name="emailId" id="emailId" required="required"/>
+													<input type="email" name="emailId" id="emailId" required="required"  class="rightCell"/>
 												</td>
 											</tr>
 											<tr>
@@ -152,7 +157,7 @@ $( document ).ready(function() {
 													<label for="password">Password</label>
 												</td>
 												<td>
-													<input type="password" name="password" id="password" required="required"/>
+													<input type="password" name="password" id="password" required="required"  class="rightCell"/>
 												</td>
 											</tr>
 											<tr>
@@ -160,7 +165,7 @@ $( document ).ready(function() {
 													<label for="Security Question 1">Security Question 1</label>
 												</td>
 												<td>
-													<select name="securityQuestion1" id="securityQuestion1" style="width:173px;">
+													<select name="securityQuestion1" id="securityQuestion1"  class="rightCell">
 														<option name="fmn" id="fmn">First Mobile Number</option>
 														<option name="fsn" id="fsn">First School Name</option>
 														<option name="wyb" id="wyb">Where Your Born</option>
@@ -172,7 +177,7 @@ $( document ).ready(function() {
 													<label for="Security Question Answer 1">Security Question Answer 1</label>
 												</td>
 												<td>
-													<input type="Text" name="securityQuestionAnswer1" id="securityQuestionAnswer1" required="required"/>
+													<input type="Text" name="securityQuestionAnswer1" id="securityQuestionAnswer1" required="required"  class="rightCell"/>
 												</td>
 											</tr>
 											<tr>
@@ -181,7 +186,7 @@ $( document ).ready(function() {
 													<label for="Security Question 2">Security Question 2</label>
 												</td>
 												<td>
-													<select name="securityQuestion2" id="securityQuestion2" style="width:173px;">
+													<select name="securityQuestion2" id="securityQuestion2" class="rightCell">
 														<option name="bfn" id="bfn">Best Friend Name</option>
 														<option name="mmn" id="mmn">Mother Middle Name</option>
 														<option name="fc" id="fc">Favourite colour</option>
@@ -193,7 +198,7 @@ $( document ).ready(function() {
 													<label for="Security Question Answer 2">Security Question Answer 2</label>
 												</td>
 												<td>
-													<input type="Text" name="securityQuestionAnswer2" id="securityQuestionAnswer2" required="required"/>
+													<input type="Text" name="securityQuestionAnswer2" id="securityQuestionAnswer2" required="required"  class="rightCell"/>
 												</td>
 											</tr>
 											<tr>
@@ -202,7 +207,7 @@ $( document ).ready(function() {
 													
 												</td>
 												<td>
-													<input type="submit" value="Register"/>
+													<input type="submit" value="Register"  class="rightCell"/>
 												</td>
 											</tr>
 										</table>

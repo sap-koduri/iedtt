@@ -12,7 +12,11 @@
 <title>Online Defect Tracking System</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link rel="stylesheet" href="layout/styles/layout.css" type="text/css" />
-<script src="js/jquery.1.9.1.min.js"></script>
+<script src="js/jquery.1.9.1.min.js"></script> 
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
 <style>
 .rightCell {
 	width: 173px;
@@ -64,6 +68,7 @@ $( document ).ready(function() {
     $("#defectDate").val('<%=defect.getDefectDate()!= null ?defect.getDefectDate():""%>');
     $("#eta").val('<%=defect.getEta()!= null ?defect.getEta():"" %>');
     $("#rca").val('<%=defect.getRca()!= null ?defect.getRca():"" %>');
+    $("#eta").datepicker();
 });
 $("#status").change(function(){
 	
@@ -151,8 +156,8 @@ $("#status").change(function(){
 											</tr>
 											<tr>
 												<td>ETA</td>
-												<td><input type="date" name="eta" id="eta" value=""
-													required="required" class="rightCell" placeholder="MM/DD/YYYY"/></td>
+												<td><input type="text" name="eta" id="eta" value=""
+													required="required" class="rightCell" placeholder="MM/DD/YYYY" readonly="readonly"/></td>
 												<td>RCA</td>
 												<td><textarea  name="rca" id="rca" 
 													class="rightCell" placeholder="Root Cause of Defect Analysis"></textarea></td>

@@ -29,22 +29,45 @@
 <title>Online Defect Tracking System</title>
 <meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1" />
 <link rel="stylesheet" href="layout/styles/layout.css" type="text/css" />
+<script src="js/jquery.1.9.1.min.js"></script>  
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+         rel = "stylesheet">
 <style type="text/css">
 	.rightCell{
 		width: 173px;
 	}
 </style>
-<script src="js/jquery.1.9.1.min.js"></script>
 
 <script type="text/javascript">
 $( document ).ready(function() {
 	$("#assignedTo").val("");
     $("#assignedTo").append('<%=usrNames%>');
     $("#projectName").append('<%=prjcts%>');
+    $("#defectDate").datepicker();
 });
 
 </script>
-
+<script type="text/javascript">
+function isValidDate(dateVal){
+	  if (dateVal.match(/^(?:(0[1-9]|1[012])[\- \/.](0[1-9]|[12][0-9]|3[01])[\- \/.](19|20)[0-9]{2})$/)){
+	    return true;
+	  }else{
+	    return false;
+	  }
+	}
+</script>
+<script type="text/javascript">
+function validateForm() {
+	if(isValidDate($("#defectDate").val()) == true){
+		return true;
+	}else{
+		alert(" Give date in mm/dd/yyyy format");
+		return false;
+	}
+}
+</script>
 </head>
 <body id="top">
 <div class="wrapper col1">
@@ -73,7 +96,7 @@ $( document ).ready(function() {
 							<p><h3>Create New Defect</h3></p>
 							<div>
 								<section>
-									<form method="post" action="./CreateDefectServlet">
+									<form method="post" action="./CreateDefectServlet" onsubmit="return validateForm()">
 										<table>
 											<tr>
 												<td>Description</td>
@@ -121,7 +144,7 @@ $( document ).ready(function() {
 											</tr>
 											<tr>
 												<td>Defect Identified Date</td>
-												<td><input type="date" name="defectDate" id="defectDate" value="" required="required" class="rightCell"/></td>
+												<td><input type="text" name="defectDate" id="defectDate" value="" required="required" class="rightCell" readonly="readonly"/></td>
 											</tr>
 <!-- 											<tr> -->
 <!-- 												<td>ETA</td> -->
